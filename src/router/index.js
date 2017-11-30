@@ -32,7 +32,7 @@ export default new Router({
         },
         {
           path: 'anime',
-          name: 'PageHome',
+          name: 'PageAnime',
           component: PageAnime
         }
       ]
