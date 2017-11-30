@@ -5,6 +5,9 @@ import App from './App'
 import router from './router'
 import store from './store'
 
+// Import bulma css
+import 'bulma/css/bulma.css'
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
