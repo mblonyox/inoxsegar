@@ -43,13 +43,30 @@ const actions = {
     })
       .then(response => response.json())
       .then(data => {
+        commit('setPending', false)
         if (data.success) {
           commit('setUser', data.user)
           commit('setToken', data.token)
           commit('setLoggedIn', true)
-          router.push(redirectTo)
+          if (redirectTo) router.push(redirectTo)
+          else router.push('/')
         } else commit('setError', data.message)
       })
+      .catch(error => {
+        commit('setPending', false)
+        commit('setError', error)
+      })
+  },
+  signOut ({commit}) {
+    commit('setUser', {
+      username: null,
+      email: null,
+      firstName: null,
+      lastName: null
+    })
+    commit('setToken', null)
+    commit('setLoggedIn', false)
+    router.push('/auth/sign-in')
   }
 }
 

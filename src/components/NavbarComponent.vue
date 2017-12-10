@@ -18,12 +18,24 @@
           <router-link class="navbar-item" exact-active-class="is-active" to="/anime">Anime</router-link>
         </div>
         <div class="navbar-end">
-
+          <a class="button is-danger" @click.stop="doSignOut">
+            <span>Sign Out</span>
+          </a>
         </div>
       </div>
     </div>
   </nav>
 </template>
+
+<script>
+  export default {
+    methods: {
+      doSignOut () {
+        this.$store.dispatch('signOut')
+      }
+    }
+  }
+</script>
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Lobster');

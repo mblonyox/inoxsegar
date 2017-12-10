@@ -23,11 +23,14 @@
             <input type="checkbox"> Remember me
           </label>
         </div>
-        <input type="submit" class="button is-block is-info is-large" value="Login">
+        <a class="button is-block is-info is-large" :class="{'is-loading': pending}" @click="onSubmit">
+          <input type="submit" style="display:none">
+          <span>Login</span>
+        </a>
       </form>
     </div>
     <p class="has-text-grey-lighter">
-      <router-link to="/auth/signup">Daftar Baru</router-link> &nbsp;·&nbsp;
+      <router-link to="/auth/sign-up">Daftar Baru</router-link> &nbsp;·&nbsp;
       <router-link to="/auth/reset-password">Lupa Sandi</router-link> &nbsp;·&nbsp;
     </p>
   </div>
@@ -38,15 +41,24 @@
     data () {
       return {
         email: null,
-        password: null
+        password: null,
+        isValid: false
+      }
+    },
+    computed: {
+      error () {
+        return this.$store.state.auth.error
+      },
+      pending () {
+        return this.$store.state.auth.pending
       }
     },
     methods: {
       onSubmit () {
-        let credentials = {email: this.email, password: this.password}
+        let credentials = { email: this.email, password: this.password }
         let redirectTo = this.$route.query.redirect
         this.validateInput()
-        this.$store.dispatch('authenticate', {credentials, redirectTo})
+        this.$store.dispatch('authenticate', { credentials, redirectTo })
       },
       validateInput () {
 

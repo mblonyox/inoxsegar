@@ -17,7 +17,7 @@ export default {
 
 <style>
 .nprogress-container {
-  position: fixed !important;
+  position: static !important;
 }
 </style>
 
