@@ -7,6 +7,10 @@
       <figure class="avatar">
         <img src="">
       </figure>
+      <div class="notification is-danger" v-if="error">
+          <button class="delete" @click="closeError"></button>
+          <span>{{ error }}</span>
+      </div>
       <form @submit.prevent="onSubmit">
         <div class="field">
           <div class="control">
@@ -62,6 +66,9 @@
       },
       validateInput () {
 
+      },
+      closeError () {
+        this.$store.dispatch('clearError')
       }
     }
 

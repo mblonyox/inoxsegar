@@ -67,6 +67,9 @@ const actions = {
     commit('setToken', null)
     commit('setLoggedIn', false)
     router.push('/auth/sign-in')
+  },
+  clearError ({commit}) {
+    commit('setError', null)
   }
 }
 
