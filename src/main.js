@@ -8,6 +8,7 @@ import nprogress from './helpers/nprogress'
 
 // Import bulma css
 import 'bulma/css/bulma.css'
+import 'font-awesome/css/font-awesome.css'
 
 Vue.config.productionTip = false
 
