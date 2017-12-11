@@ -47,7 +47,7 @@ const router = new Router({
       ]
     },
     {
-      path: '/auth',
+      path: '/',
       component: LayoutPlain,
       children: [
         {
@@ -64,7 +64,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(route => route.meta.authenticated) && !store.state.auth.loggedIn) next({path: '/auth/sign-in', query: {redirect: to.fullPath}})
+  if (to.matched.some(route => route.meta.authenticated) && !store.state.auth.loggedIn) next({path: '/sign-in', query: {redirect: to.fullPath}})
   else next()
 })
 
