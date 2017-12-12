@@ -57,6 +57,9 @@ const actions = {
         commit('setError', error)
       })
   },
+  register ({commit}, data) {
+    commit('setPending', true)
+  },
   signOut ({commit}) {
     commit('setUser', {
       username: null,
