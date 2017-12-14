@@ -13,6 +13,7 @@ import PageTv from '@/components/PageTv'
 import PageAnime from '@/components/PageAnime'
 import PageSignIn from '@/components/PageSignIn'
 import PageSignUp from '@/components/PageSignUp'
+import PageUpload from '@/components/PageUpload'
 
 Vue.use(Router)
 
@@ -43,6 +44,11 @@ const router = new Router({
           path: 'anime',
           name: 'PageAnime',
           component: PageAnime
+        },
+        {
+          path: 'upload',
+          name: 'PageUpload',
+          component: PageUpload
         }
       ]
     },

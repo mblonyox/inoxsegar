@@ -18,9 +18,23 @@
           <router-link class="navbar-item" exact-active-class="is-active" to="/anime">Anime</router-link>
         </div>
         <div class="navbar-end">
-          <a class="button is-danger" @click.stop="doSignOut">
-            <span>Sign Out</span>
-          </a>
+          <div class="navbar-item">
+            <div class="field is-grouped">
+              <p class="control">
+                <router-link class="button is-success" to="/upload">
+                  <span class="icon">
+                    <i class="fa fa-upload"></i>
+                  </span>
+                  <span>Upload</span>
+                </router-link>
+              </p>
+              <p class="control">
+                <a class="button is-danger" @click.stop="doSignOut">
+                  <span>Sign Out</span>
+                </a>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
