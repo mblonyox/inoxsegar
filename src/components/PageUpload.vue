@@ -42,6 +42,12 @@
         const upload = new tus.Upload(file, {
           endpoint: 'http://localhost:3000/upload',
           retryDelays: [0, 1000, 5000],
+          metadata: {
+            filename: file.name,
+            size: file.size,
+            type: file.type,
+            modified: file.lastModified
+          },
           onError: (error) => {
             console.log('Failed because: ' + error)
           },
