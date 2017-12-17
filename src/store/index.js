@@ -4,12 +4,14 @@ import createPersistedState from 'vuex-persistedstate'
 
 // Import modules
 import auth from './modules/auth'
+import upload from './modules/upload'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
-    auth
+    auth,
+    upload
   },
   plugins: [createPersistedState({
     key: 'v-0.0.1'
