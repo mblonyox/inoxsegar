@@ -6,8 +6,8 @@ const state = {
   user: {
     username: null,
     email: null,
-    firstName: null,
-    lastName: null
+    admin: false,
+    active: false
   },
   token: null,
   loggedIn: false,
@@ -17,25 +17,38 @@ const state = {
 
 const mutations = {
   setUser (state, user) {
-    state.user = user
+    if (user) {
+      state.user.username = user.username
+      state.user.email = user.email
+      state.user.admin = user.admin
+      state.user.active = user.active
+    } else {
+      state.user.username = null
+      state.user.email = null
+      state.user.admin = false
+      state.user.active = false
+    }
   },
   setToken (state, token) {
     state.token = token
   },
+  setActive (state, isActive) {
+    state.user.active = isActive
+  },
   setLoggedIn (state, isLoggedIn) {
     state.loggedIn = isLoggedIn
   },
-  setPending (state, isPending) {
+  setAuthPending (state, isPending) {
     state.pending = isPending
   },
-  setError (state, error) {
+  setAuthError (state, error) {
     state.error = error
   }
 }
 
 const actions = {
   authenticate ({commit}, {credentials, redirectTo}) {
-    commit('setPending', true)
+    commit('setAuthPending', true)
     fetch(apiUrl + 'authenticate', {
       method: 'POST',
       mode: 'cors',
@@ -43,36 +56,46 @@ const actions = {
     })
       .then(response => response.json())
       .then(data => {
-        commit('setPending', false)
+        commit('setAuthPending', false)
         if (data.success) {
           commit('setUser', data.user)
           commit('setToken', data.token)
           commit('setLoggedIn', true)
           if (redirectTo) router.push(redirectTo)
           else router.push('/')
-        } else commit('setError', data.message)
+        } else commit('setAuthError', data.message)
       })
       .catch(error => {
-        commit('setPending', false)
-        commit('setError', error)
+        commit('setAuthPending', false)
+        commit('setAuthError', error)
       })
   },
   register ({commit}, data) {
-    commit('setPending', true)
+    commit('setAuthPending', true)
+    fetch(apiUrl + 'register', {
+      method: 'POST',
+      mode: 'cors',
+      body: new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'})
+    })
+      .then(response => response.json())
+      .then(data => {
+        commit('setAuthPending', false)
+        if (data.success) {
+          commit('setUser', data.user)
+          commit('setToken', data.token)
+          commit('setLoggedIn', true)
+          router.push('/activate-account')
+        }
+      })
   },
   signOut ({commit}) {
-    commit('setUser', {
-      username: null,
-      email: null,
-      firstName: null,
-      lastName: null
-    })
+    commit('setUser', false)
     commit('setToken', null)
     commit('setLoggedIn', false)
-    router.push('/auth/sign-in')
+    router.push('/sign-in')
   },
   clearError ({commit}) {
-    commit('setError', null)
+    commit('setAuthError', null)
   }
 }
 

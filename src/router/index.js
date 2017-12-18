@@ -14,6 +14,7 @@ import PageAnime from '@/components/PageAnime'
 import PageSignIn from '@/components/PageSignIn'
 import PageSignUp from '@/components/PageSignUp'
 import PageUpload from '@/components/PageUpload'
+import PageActivateAccount from '@/components/PageActivateAccount'
 
 Vue.use(Router)
 
@@ -58,11 +59,18 @@ const router = new Router({
       children: [
         {
           path: 'sign-in',
+          meta: { authenticated: false },
           component: PageSignIn
         },
         {
           path: 'sign-up',
+          meta: { authenticated: false },
           component: PageSignUp
+        },
+        {
+          path: 'activate-account',
+          meta: { authenticated: true },
+          component: PageActivateAccount
         }
       ]
     }
@@ -70,7 +78,15 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(route => route.meta.authenticated) && !store.state.auth.loggedIn) next({path: '/sign-in', query: {redirect: to.fullPath}})
+  if (to.matched.some(route => route.meta.authenticated)) {
+    if (store.state.auth.loggedIn) {
+      if (store.state.auth.user.active) {
+        if (to.path === '/activate-account') next('/')
+        else next()
+      } else if (to.path === '/activate-account') next()
+      else next('/activate-account')
+    } else next({path: '/sign-in', query: {redirect: to.fullPath}})
+  } else if (to.matched.some(route => route.meta.authenticated === false) && store.state.auth.loggedIn) next({path: '/'})
   else next()
 })
 
