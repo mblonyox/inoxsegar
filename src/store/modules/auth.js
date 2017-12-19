@@ -108,6 +108,35 @@ const actions = {
         commit('setAuthError', error.message)
       })
   },
+  activate ({commit, state}, kode) {
+    const vm = this._vm
+    commit('setAuthPending', true)
+    fetch(apiUrl + 'activate', {
+      method: 'POST',
+      mode: 'cors',
+      body: new Blob([JSON.stringify({kode, token: state.token}, null, 2)], {type: 'application/json'})
+    })
+      .then(response => response.json())
+      .then(data => {
+        commit('setAuthPending', false)
+        if (data.success) {
+          commit('setActive', true)
+          vm.$notify({
+            group: 'system',
+            title: 'Aktivasi berhasil.',
+            text: data.message,
+            type: 'success'
+          })
+          router.push('/')
+        } else {
+          commit('setAuthError', data.message)
+        }
+      })
+      .catch(error => {
+        commit('setAuthPending', false)
+        commit('setAuthError', error.message)
+      })
+  },
   signOut ({commit}) {
     const vm = this._vm
     commit('setUser', false)

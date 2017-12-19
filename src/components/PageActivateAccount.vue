@@ -8,13 +8,17 @@
       </figure>
       <p class="subtitle has-text-black">Kode Aktivasi telah dikirim ke email anda: <a :href="'mailto:'+email" class="has-text-info">{{ email }}</a>.</p>
       <hr>
-      <form>
+      <form @submit.prevent="activate">
         <div class="control has-icons-left">
           <input type="text" class="input is-large" v-model="kode" placeholder="Kode Aktivasi">
           <span class="icon is-small is-left">
             <i class="fa fa-key"></i>
           </span>
           <p class="help is-danger has-text-left" v-if="!isValid.kode">{{ isValid.kodeHelper }}</p>
+        </div>
+        <div class="notification is-danger" v-if="error">
+          <button class="delete" @click.prevent="closeError"></button>
+          <span>{{ error }}</span>
         </div>
         <button type="submit" class="button is-block is-info is-large" :class="{'is-loading': pending}">
           <span>Aktivasi</span>
@@ -55,11 +59,20 @@ export default {
     },
     pending () {
       return this.$store.state.auth.pending
+    },
+    error () {
+      return this.$store.state.auth.error
     }
   },
   methods: {
     signOut () {
       this.$store.dispatch('signOut')
+    },
+    activate () {
+      this.$store.dispatch('activate', this.kode)
+    },
+    closeError () {
+      this.$store.dispatch('clearError')
     }
   }
 }
