@@ -48,6 +48,7 @@ const mutations = {
 
 const actions = {
   authenticate ({commit}, {credentials, redirectTo}) {
+    const vm = this._vm
     commit('setAuthPending', true)
     fetch(apiUrl + 'authenticate', {
       method: 'POST',
@@ -61,16 +62,23 @@ const actions = {
           commit('setUser', data.user)
           commit('setToken', data.token)
           commit('setLoggedIn', true)
+          vm.$notify({
+            group: 'system',
+            title: 'Login berhasil',
+            text: 'Halo, anda berhasil login.',
+            type: 'success'
+          })
           if (redirectTo) router.push(redirectTo)
           else router.push('/')
         } else commit('setAuthError', data.message)
       })
       .catch(error => {
         commit('setAuthPending', false)
-        commit('setAuthError', error)
+        commit('setAuthError', error.message)
       })
   },
   register ({commit}, data) {
+    const vm = this._vm
     commit('setAuthPending', true)
     fetch(apiUrl + 'register', {
       method: 'POST',
@@ -84,14 +92,33 @@ const actions = {
           commit('setUser', data.user)
           commit('setToken', data.token)
           commit('setLoggedIn', true)
+          vm.$notify({
+            group: 'system',
+            title: 'Registrasi berhasil.',
+            text: data.message,
+            type: 'success'
+          })
           router.push('/activate-account')
+        } else {
+          commit('setAuthError', data.message)
         }
+      })
+      .catch(error => {
+        commit('setAuthPending', false)
+        commit('setAuthError', error.message)
       })
   },
   signOut ({commit}) {
+    const vm = this._vm
     commit('setUser', false)
     commit('setToken', null)
     commit('setLoggedIn', false)
+    vm.$notify({
+      group: 'system',
+      title: 'Keluar berhasil',
+      text: 'Anda berhasil keluar.',
+      type: 'success'
+    })
     router.push('/sign-in')
   },
   clearError ({commit}) {

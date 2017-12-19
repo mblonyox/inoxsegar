@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import nprogress from './helpers/nprogress'
+import './helpers/notification'
 
 // Import bulma css
 import 'bulma/css/bulma.css'
