@@ -1,6 +1,7 @@
 import tus from 'tus-js-client'
+import serverUrl from '../../helpers/backend-url'
 
-const uploadEndpoint = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/upload' : '/upload'
+const uploadEndpoint = serverUrl + 'upload'
 
 const state = {
   queue: [],

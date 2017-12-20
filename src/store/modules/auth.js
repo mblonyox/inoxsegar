@@ -1,6 +1,7 @@
 import router from '../../router'
+import serverUrl from '../../helpers/backend-url'
 
-const apiUrl = 'http://localhost:3000/api/'
+const apiUrl = serverUrl + 'api/'
 
 const state = {
   user: {

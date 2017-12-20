@@ -7,6 +7,7 @@
         <img :src="avatar">
       </figure>
       <p class="subtitle has-text-black">Kode Aktivasi telah dikirim ke email anda: <a :href="'mailto:'+email" class="has-text-info">{{ email }}</a>.</p>
+      <p class="subtitle has-text-black">Belum menerima email? <a class="has-text-info" @click="resendActivation" v-if="!sendingMail">Kirim Ulang</a> <span v-else><i class="fa fa-spinner fa-pulse fa-fw"></i></span></p>
       <hr>
       <form @submit.prevent="activate">
         <div class="control has-icons-left">
@@ -34,6 +35,7 @@
 <script>
 import md5 from 'md5'
 import defaultAvatar from '../assets/mblonyox-logo-sm.png'
+import serverUrl from '../helpers/backend-url'
 
 export default {
   data () {
@@ -42,7 +44,8 @@ export default {
       isValid: {
         kode: null,
         kodeHelper: ''
-      }
+      },
+      sendingMail: false
     }
   },
   computed: {
@@ -70,6 +73,35 @@ export default {
     },
     activate () {
       this.$store.dispatch('activate', this.kode)
+    },
+    resendActivation () {
+      this.sendingMail = true
+      let httpHeaders = new Headers({
+        'x-access-token': this.$store.state.auth.token
+      })
+      fetch(serverUrl + 'api/resend_activation', {
+        method: 'GET',
+        mode: 'cors',
+        headers: httpHeaders
+      })
+        .then(response => response.json())
+        .then(data => {
+          this.sendingMail = false
+          if (data.success) {
+            this.$notify({
+              group: 'system',
+              title: 'Email aktivasi.',
+              text: data.message,
+              type: 'success'
+            })
+          } else {
+            this.$store.commit('setAuthError', data.message)
+          }
+        })
+        .catch(err => {
+          this.sendingMail = false
+          this.$store.commit('setAuthError', err.message)
+        })
     },
     closeError () {
       this.$store.dispatch('clearError')
