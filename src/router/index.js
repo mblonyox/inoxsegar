@@ -15,6 +15,7 @@ import PageSignIn from '@/components/PageSignIn'
 import PageSignUp from '@/components/PageSignUp'
 import PageUpload from '@/components/PageUpload'
 import PageActivateAccount from '@/components/PageActivateAccount'
+import PageFiles from '@/components/PageFiles'
 
 Vue.use(Router)
 
@@ -50,6 +51,11 @@ const router = new Router({
           path: 'upload',
           name: 'PageUpload',
           component: PageUpload
+        },
+        {
+          path: 'files',
+          name: 'PageFiles',
+          component: PageFiles
         }
       ]
     },

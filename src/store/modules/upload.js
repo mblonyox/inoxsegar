@@ -1,7 +1,7 @@
 import tus from 'tus-js-client'
 import serverUrl from '../../helpers/backend-url'
 
-const uploadEndpoint = serverUrl + 'upload'
+const uploadEndpoint = serverUrl + 'api/upload'
 
 const state = {
   queue: [],
@@ -27,16 +27,20 @@ const mutations = {
 }
 
 const actions = {
-  addUpload ({state, commit}, file) {
+  addUpload ({state, commit, rootState}, file) {
     const name = file.name
     const upload = new tus.Upload(file, {
       endpoint: uploadEndpoint,
       retryDelays: [0, 1000, 5000],
+      headers: {
+        'x-access-token': rootState.auth.token
+      },
       metadata: {
         filename: file.name,
         size: file.size,
         type: file.type,
-        modified: file.lastModified
+        modified: file.lastModified,
+        uploader: rootState.auth.user.username
       },
       onError: onErrorCallback,
       onProgress: onProgressCallback,
