@@ -8,7 +8,8 @@ import LayoutPlain from '@/components/LayoutPlain'
 
 // Import Page Components
 import PageHome from '@/components/PageHome'
-import PageMovie from '@/components/PageMovie'
+import PageMovies from '@/components/PageMovies'
+import PageNewMovie from '@/components/PageNewMovie'
 import PageTv from '@/components/PageTv'
 import PageAnime from '@/components/PageAnime'
 import PageSignIn from '@/components/PageSignIn'
@@ -34,8 +35,13 @@ const router = new Router({
         },
         {
           path: 'movie',
-          name: 'PageMovie',
-          component: PageMovie
+          name: 'PageMovies',
+          component: PageMovies
+        },
+        {
+          path: 'movie/new',
+          name: 'PageNewMovie',
+          component: PageNewMovie
         },
         {
           path: 'tv',
