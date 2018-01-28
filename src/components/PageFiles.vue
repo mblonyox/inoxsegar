@@ -21,7 +21,7 @@
             <td>{{ files.indexOf(file) + 1}}</td>
             <td>{{ file.name }}</td>
             <td>{{ humanFilesize(file.size) }}</td>
-            <td>{{ file.uploader }}</td>
+            <td> <router-link :to="{name: 'PageUser', params: {id: file.uploader._id }}">{{ file.uploader.username }}</router-link> </td>
             <td>{{ (new Date(file.date)).toLocaleString('id-ID') }}</td>
             <td>{{ file.koleksi ? file.kolesi.title : 'Uncategorized'}}</td>
             <td>
@@ -71,7 +71,7 @@ export default {
     let httpHeaders = new Headers({
       'x-access-token': this.$store.state.auth.token
     })
-    fetch(serverUrl + 'api/files', {
+    fetch(serverUrl + 'api/file', {
       method: 'GET',
       mode: 'cors',
       headers: httpHeaders

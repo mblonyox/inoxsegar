@@ -40,7 +40,7 @@ const actions = {
         size: file.size,
         type: file.type,
         modified: file.lastModified,
-        uploader: rootState.auth.user.username
+        uploader: rootState.auth.user.id
       },
       onError: onErrorCallback,
       onProgress: onProgressCallback,

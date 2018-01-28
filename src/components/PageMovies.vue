@@ -41,13 +41,15 @@
     <div class="box">
       <div class="columns is-multiline">
         <div class="column is-one-quarter" v-for="movie in movies">
-          <div class="card">
-            <div class="card-image">
-              <figure class="image">
-                <img :src="movie.Poster">
-              </figure>
+          <router-link :to="{name: 'PageMovie', params: {id: movie._id}}">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image">
+                  <img :src="movie.poster">
+                </figure>
+              </div>
             </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -55,12 +57,28 @@
 </template>
 
 <script>
-import {Search} from '../assets/movies.json'
+import serverUrl from '../helpers/backend-url'
+
 export default {
   data () {
     return {
-      movies: Search
+      movies: []
     }
+  },
+  mounted () {
+    fetch(serverUrl + 'api/movie', {
+      method: 'GET',
+      mode: 'cors',
+      headers: new Headers({
+        'x-access-token': this.$store.state.auth.token
+      })
+    })
+      .then(response => response.json())
+      .then(json => {
+        if (json.success) {
+          this.movies = json.data.movies
+        }
+      })
   }
 }
 </script>

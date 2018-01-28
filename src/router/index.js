@@ -17,6 +17,8 @@ import PageSignUp from '@/components/PageSignUp'
 import PageUpload from '@/components/PageUpload'
 import PageActivateAccount from '@/components/PageActivateAccount'
 import PageFiles from '@/components/PageFiles'
+import PageUser from '@/components/PageUser'
+import PageMovie from '@/components/PageMovie'
 
 Vue.use(Router)
 
@@ -62,6 +64,17 @@ const router = new Router({
           path: 'files',
           name: 'PageFiles',
           component: PageFiles
+        },
+        {
+          path: 'user/:id',
+          name: 'PageUser',
+          component: PageUser
+        },
+        {
+          path: 'movie/:id',
+          name: 'PageMovie',
+          component: PageMovie,
+          props: true
         }
       ]
     },

@@ -5,6 +5,7 @@ const apiUrl = serverUrl + 'api/'
 
 const state = {
   user: {
+    id: null,
     username: null,
     email: null,
     admin: false,
@@ -19,11 +20,13 @@ const state = {
 const mutations = {
   setUser (state, user) {
     if (user) {
+      state.user.id = user._id
       state.user.username = user.username
       state.user.email = user.email
       state.user.admin = user.admin
       state.user.active = user.active
     } else {
+      state.user.id = null
       state.user.username = null
       state.user.email = null
       state.user.admin = false
