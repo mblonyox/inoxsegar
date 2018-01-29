@@ -1,7 +1,7 @@
 <template>
   <section id="movies" class="container">
     <h1 class="title">Koleksi Movies
-      <router-link class="button is-success" to="/movie/new">
+      <router-link class="button is-success" to="/movie/new" v-if="isAdmin">
         <span class="icon">
           <i class="fa fa-plus"></i>
         </span>
@@ -63,6 +63,11 @@ export default {
   data () {
     return {
       movies: []
+    }
+  },
+  computed: {
+    isAdmin () {
+      return this.$store.state.auth.user.admin
     }
   },
   mounted () {

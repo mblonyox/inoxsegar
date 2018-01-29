@@ -23,7 +23,7 @@
             <td>{{ humanFilesize(file.size) }}</td>
             <td> <router-link :to="{name: 'PageUser', params: {id: file.uploader._id }}">{{ file.uploader.username }}</router-link> </td>
             <td>{{ (new Date(file.date)).toLocaleString('id-ID') }}</td>
-            <td>{{ file.koleksi ? file.kolesi.title : 'Uncategorized'}}</td>
+            <td><router-link :to="file.koleksi.tipe + '/' + file.koleksi.data._id" v-if="file.koleksi">{{file.koleksi.data.title}} ({{file.koleksi.data.year}})</router-link><span v-else>Non-koleksi</span></td>
             <td>
               <span class="icon">
                 <i class="fa fa-thumbs-o-up"></i>
@@ -36,7 +36,7 @@
                   <i class="fa fa-download"></i>
                 </span>
               </a>
-              <span class="icon" v-if="$store.state.auth.admin">
+              <span class="icon" v-if="isAdmin">
                 <i class="fa fa-wrench"></i>
               </span>
             </td>
@@ -65,6 +65,9 @@ export default {
   computed: {
     serverUrl () {
       return serverUrl
+    },
+    isAdmin () {
+      return this.$store.state.auth.admin
     }
   },
   mounted () {

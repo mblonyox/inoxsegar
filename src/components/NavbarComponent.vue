@@ -30,7 +30,7 @@
           <div class="navbar-item">
             <div class="field is-grouped">
               <p class="control">
-                <router-link class="button is-success" to="/upload">
+                <router-link class="button is-success" to="/upload" v-if="isAdmin">
                   <span class="icon">
                     <i class="fa fa-upload"></i>
                   </span>
@@ -52,6 +52,11 @@
 
 <script>
   export default {
+    computed: {
+      isAdmin () {
+        return this.$store.state.auth.user.admin
+      }
+    },
     methods: {
       doSignOut () {
         this.$store.dispatch('signOut')
