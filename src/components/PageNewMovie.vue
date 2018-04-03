@@ -165,7 +165,7 @@
     },
     methods: {
       getMovieInfo (id) {
-        fetch('http://www.omdbapi.com/?apikey=' + apiKey + '&i=' + id)
+        fetch('https://www.omdbapi.com/?apikey=' + apiKey + '&i=' + id)
           .then(res => res.json())
           .then(data => {
             this.title = data.Title
