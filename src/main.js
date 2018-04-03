@@ -6,6 +6,7 @@ import router from './router'
 import store from './store'
 import nprogress from './helpers/nprogress'
 import './helpers/notification'
+import './helpers/sweetalert2'
 
 // Import bulma css
 import 'bulma/css/bulma.css'
@@ -14,7 +15,7 @@ import 'font-awesome/css/font-awesome.css'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
+export default new Vue({
   el: '#app',
   router,
   store,

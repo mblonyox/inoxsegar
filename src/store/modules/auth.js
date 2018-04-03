@@ -1,5 +1,6 @@
 import router from '../../router'
 import serverUrl from '../../helpers/backend-url'
+import vm from '../../main'
 
 const apiUrl = serverUrl + 'api/'
 
@@ -52,7 +53,6 @@ const mutations = {
 
 const actions = {
   authenticate ({commit}, {credentials, redirectTo}) {
-    const vm = this._vm
     commit('setAuthPending', true)
     fetch(apiUrl + 'authenticate', {
       method: 'POST',
@@ -82,7 +82,6 @@ const actions = {
       })
   },
   register ({commit}, data) {
-    const vm = this._vm
     commit('setAuthPending', true)
     fetch(apiUrl + 'register', {
       method: 'POST',
@@ -113,7 +112,6 @@ const actions = {
       })
   },
   activate ({commit, state}, kode) {
-    const vm = this._vm
     commit('setAuthPending', true)
     fetch(apiUrl + 'activate', {
       method: 'POST',
@@ -142,7 +140,6 @@ const actions = {
       })
   },
   signOut ({commit}) {
-    const vm = this._vm
     commit('setUser', false)
     commit('setToken', null)
     commit('setLoggedIn', false)
