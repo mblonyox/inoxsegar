@@ -6,7 +6,10 @@
       <figure class="avatar">
         <img :src="avatar">
       </figure>
-      <form @submit.prevent="onSubmit">
+      <div v-if="sent">
+        <h4 class="is-size-4">Email telah terkirim pada alamat <b>{{ email }}</b>. <br> Silakan cek pada Kotak Masuk email anda.</h4>
+      </div>
+      <form @submit.prevent="onSubmit" v-else>
         <div class="field">
           <div class="control has-icons-left">
             <input class="input is-large" type="email" placeholder="Email" autofocus="" v-model="email" required :disabled="pending">
@@ -31,22 +34,34 @@
 <script>
   import md5 from 'md5'
   import defaultAvatar from '../assets/mblonyox-logo-sm.png'
+  import { BaseService } from '../helpers/api-service'
 
   export default {
     data: () => ({
       email: '',
-      pending: false
+      sent: false
     }),
     computed: {
       avatar () {
         if (/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.email)) {
           return 'https://www.gravatar.com/avatar/' + md5(this.email) + '?d=wavatar&s=150'
         } else return defaultAvatar
+      },
+      pending () {
+        return this.$store.state.ui.pending
       }
     },
     methods: {
       onSubmit () {
-  
+        BaseService.doRequest({
+          url: 'reset_password',
+          method: 'POST',
+          body: { email: this.email }
+        }).then(({result}) => {
+          if (result.body.success) {
+            this.sent = true
+          }
+        })
       }
     }
   }

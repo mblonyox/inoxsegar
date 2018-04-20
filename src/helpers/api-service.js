@@ -6,9 +6,14 @@ import serverUrl from './backend-url'
 import vm from '../main'
 
 export const BaseService = new ApiService({adapter: fetch,
-  url: serverUrl + 'api'
+  url: serverUrl + 'api',
+  hooks: {
+    before ({payload, next}) {
+      store.dispatch('pendingStart')
+      next(payload)
+    }
+  }
 })
-  .on('start', () => { store.dispatch('pendingStart') })
   .on('error', errorLogger)
   .on('fail', failLogger)
   .on('done', doneLogger)
