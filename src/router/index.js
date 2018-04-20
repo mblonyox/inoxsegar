@@ -19,6 +19,7 @@ import PageActivateAccount from '@/components/PageActivateAccount'
 import PageFiles from '@/components/PageFiles'
 import PageUser from '@/components/PageUser'
 import PageMovie from '@/components/PageMovie'
+import PageResetPassword from '@/components/PageResetPassword'
 
 Vue.use(Router)
 
@@ -96,6 +97,11 @@ const router = new Router({
           path: 'activate-account',
           meta: { authenticated: true },
           component: PageActivateAccount
+        },
+        {
+          path: 'reset-password',
+          meta: { authenticated: false },
+          component: PageResetPassword
         }
       ]
     }
