@@ -28,13 +28,11 @@ const RefreshToken = BaseService.extend({
 
 export const WithToken = BaseService.extend({
   hooks: {
-    before ({payload, meta, next}) {
-      if (!meta.requiresAuth) return next(payload)
+    before ({payload, next}) {
       const token = store.state.auth.token
       next({...payload, headers: { 'x-access-token': token }})
     },
-    async fail ({meta, result, payload, next, retry}) {
-      if (!meta.requiresAuth) return next(result)
+    async fail ({result, payload, next, retry}) {
       if (result.status !== 401) return next(result)
       const { success } = await RefreshToken.doSingleRequest()
       if (success) {

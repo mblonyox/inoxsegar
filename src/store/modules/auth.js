@@ -80,7 +80,7 @@ const actions = {
     })
       .then(({result}) => {
         if (result.body.success) {
-          commit('setAuthPending', false)
+          commit('setActive', true)
           router.push('/')
         }
       })
