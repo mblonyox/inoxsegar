@@ -6,7 +6,7 @@
       <figure class="avatar">
         <img :src="avatar">
       </figure>
-      <form @submit.prevent="onSubmitEmail">
+      <form @submit.prevent="onSubmit">
         <div class="field">
           <div class="control has-icons-left">
             <input class="input is-large" type="email" placeholder="Email" autofocus="" v-model="email" required :disabled="pending">
@@ -15,6 +15,9 @@
             </span>
           </div>
         </div>
+        <button type="submit" class="button is-block is-info is-large" :class="{'is-loading': pending}">
+          <span>Kirim email reset sandi.</span>
+        </button>
       </form>
     </div>
     <p class="has-text-white">
@@ -30,14 +33,20 @@
   import defaultAvatar from '../assets/mblonyox-logo-sm.png'
 
   export default {
+    data: () => ({
+      email: '',
+      pending: false
+    }),
     computed: {
       avatar () {
         if (/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.email)) {
           return 'https://www.gravatar.com/avatar/' + md5(this.email) + '?d=wavatar&s=150'
         } else return defaultAvatar
-      },
-      pending () {
-        return this.$store.state.auth.pending
+      }
+    },
+    methods: {
+      onSubmit () {
+  
       }
     }
   }
