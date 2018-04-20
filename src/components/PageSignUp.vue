@@ -1,5 +1,5 @@
 <template>
-  <div id="signup" class="column is-6 is-offset-3 has-text-centered">
+  <div id="signup" class="column is-4 is-offset-4 has-text-centered">
     <h3 class="title has-text-white">InoxSegar</h3>
     <p class="subtitle has-text-white">Pendaftaran akun baru.</p>
     <div class="box">
@@ -42,10 +42,6 @@
             </span>
             <p class="help is-danger has-text-left" v-if="!isValid.confirmation">{{ isValid.confirmationHelper }}</p>
           </div>
-        </div>
-        <div class="notification is-danger" v-if="error">
-          <button class="delete" @click.prevent="closeError"></button>
-          <span>{{ error }}</span>
         </div>
         <hr>
         <div class="columns">
@@ -99,16 +95,12 @@
           return 'https://www.gravatar.com/avatar/' + md5(this.email) + '?d=wavatar&s=150'
         } else return defaultAvatar
       },
-      error () {
-        return this.$store.state.auth.error
-      },
       pending () {
-        return this.$store.state.auth.pending
+        return this.$store.state.ui.pending
       }
     },
     methods: {
       onSubmit () {
-        this.closeError()
         this.validateInput()
         if (this.isValid.email && this.isValid.username && this.isValid.password && this.isValid.confirmation) {
           this.$store.dispatch('register', {
@@ -162,12 +154,6 @@
           this.isValid.confirmation = true
           this.isValid.confirmationHelper = ''
         }
-      },
-      checkAvailableUsernameEmail () {
-
-      },
-      closeError () {
-        this.$store.dispatch('clearError')
       },
       clearInputs () {
         this.username = null

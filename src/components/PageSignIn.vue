@@ -20,10 +20,6 @@
           </div>
           <p class="help is-danger has-text-left" v-if="!isValid.password">{{ isValid.passwordHelper }}</p>
         </div>
-        <div class="notification is-danger" v-if="error">
-          <button class="delete" @click.prevent="closeError"></button>
-          <span>{{ error }}</span>
-        </div>
         <div class="field has-text-left">
           <label class="checkbox">
             <input type="checkbox"> Ingat saya
@@ -65,16 +61,12 @@ export default {
         return 'https://www.gravatar.com/avatar/' + md5(this.email) + '?d=wavatar&s=150'
       } else return defaultAvatar
     },
-    error () {
-      return this.$store.state.auth.error
-    },
     pending () {
-      return this.$store.state.auth.pending
+      return this.$store.state.ui.pending
     }
   },
   methods: {
     onSubmit () {
-      this.closeError()
       let credentials = { email: this.email, password: this.password }
       let redirectTo = this.$route.query.redirect
       this.validateInput()
@@ -98,9 +90,6 @@ export default {
         this.isValid.password = true
         this.isValid.passwordHelper = ''
       }
-    },
-    closeError () {
-      this.$store.dispatch('clearError')
     }
   }
 }

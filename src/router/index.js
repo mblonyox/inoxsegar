@@ -20,6 +20,7 @@ import PageFiles from '@/components/PageFiles'
 import PageUser from '@/components/PageUser'
 import PageMovie from '@/components/PageMovie'
 import PageResetPassword from '@/components/PageResetPassword'
+import PageChangePassword from '@/components/PageChangePassword'
 
 Vue.use(Router)
 
@@ -102,6 +103,11 @@ const router = new Router({
           path: 'reset-password',
           meta: { authenticated: false },
           component: PageResetPassword
+        },
+        {
+          path: 'change-password',
+          meta: { authenticated: false },
+          component: PageChangePassword
         }
       ]
     }

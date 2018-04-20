@@ -1,5 +1,5 @@
 <template>
-  <div id="reset-password" class="column is-6 is-offset-3 has-text-centered">
+  <div id="reset-password" class="column is-4 is-offset-4 has-text-centered">
     <h3 class="title has-text-white">InoxSegar</h3>
     <p class="subtitle has-text-white">Atur ulang sandi.</p>
     <div class="box">
