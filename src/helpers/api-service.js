@@ -46,12 +46,13 @@ export const WithToken = BaseService.extend({
   }
 })
 
-function doneLogger (state) {
-  store.dispatch('notifyInfo', state.body.message)
+function doneLogger (result) {
+  if (result.body.success) store.dispatch('notifySuccess', result.body.message)
+  else store.dispatch('notifyWarning', result.body.message)
 }
 
-function failLogger (state) {
-  store.dispatch('notifyWarning', state.body.message)
+function failLogger (result) {
+  store.dispatch('notifyError', result.body.message)
 }
 
 function errorLogger (err) {
