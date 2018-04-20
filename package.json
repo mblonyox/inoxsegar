@@ -11,6 +11,8 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "@apicase/adapter-fetch": "^0.12.0",
+    "@apicase/core": "^0.13.0-alpha.2",
     "bulma": "^0.6.1",
     "filesize": "^3.5.11",
     "font-awesome": "^4.7.0",
