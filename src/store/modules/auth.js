@@ -1,8 +1,5 @@
 import router from '../../router'
-import serverUrl from '../../helpers/backend-url'
-import vm from '../../main'
-
-const apiUrl = serverUrl + 'api/'
+import { BaseService, WithToken } from '../../helpers/api-service'
 
 const state = {
   user: {
@@ -13,9 +10,7 @@ const state = {
     active: false
   },
   token: null,
-  loggedIn: false,
-  pending: false,
-  error: null
+  loggedIn: false
 }
 
 const mutations = {
@@ -42,117 +37,60 @@ const mutations = {
   },
   setLoggedIn (state, isLoggedIn) {
     state.loggedIn = isLoggedIn
-  },
-  setAuthPending (state, isPending) {
-    state.pending = isPending
-  },
-  setAuthError (state, error) {
-    state.error = error
   }
 }
 
 const actions = {
   authenticate ({commit}, {credentials, redirectTo}) {
-    commit('setAuthPending', true)
-    fetch(apiUrl + 'authenticate', {
+    BaseService.doRequest({
+      url: 'authenticate',
       method: 'POST',
-      mode: 'cors',
-      body: new Blob([JSON.stringify(credentials, null, 2)], {type: 'application/json'})
+      body: credentials
     })
-      .then(response => response.json())
-      .then(data => {
-        commit('setAuthPending', false)
-        if (data.success) {
-          commit('setUser', data.user)
-          commit('setToken', data.token)
+      .then(({result}) => {
+        if (result.body.success) {
+          commit('setUser', result.body.user)
+          commit('setToken', result.body.token)
           commit('setLoggedIn', true)
-          vm.$notify({
-            group: 'system',
-            title: 'Login berhasil',
-            text: 'Halo, anda berhasil login.',
-            type: 'success'
-          })
           if (redirectTo) router.push(redirectTo)
           else router.push('/')
-        } else commit('setAuthError', data.message)
-      })
-      .catch(error => {
-        commit('setAuthPending', false)
-        commit('setAuthError', error.message)
+        }
       })
   },
   register ({commit}, data) {
-    commit('setAuthPending', true)
-    fetch(apiUrl + 'register', {
+    BaseService.doRequest({
+      url: 'register',
       method: 'POST',
-      mode: 'cors',
-      body: new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'})
+      body: data
     })
-      .then(response => response.json())
-      .then(data => {
-        commit('setAuthPending', false)
-        if (data.success) {
-          commit('setUser', data.user)
-          commit('setToken', data.token)
+      .then(({result}) => {
+        if (result.body.success) {
+          commit('setUser', result.body.user)
+          commit('setToken', result.body.token)
           commit('setLoggedIn', true)
-          vm.$notify({
-            group: 'system',
-            title: 'Registrasi berhasil.',
-            text: data.message,
-            type: 'success'
-          })
           router.push('/activate-account')
-        } else {
-          commit('setAuthError', data.message)
         }
-      })
-      .catch(error => {
-        commit('setAuthPending', false)
-        commit('setAuthError', error.message)
       })
   },
   activate ({commit, state}, kode) {
-    commit('setAuthPending', true)
-    fetch(apiUrl + 'activate', {
+    WithToken.doRequest({
+      url: 'activate',
       method: 'POST',
-      mode: 'cors',
-      body: new Blob([JSON.stringify({kode, token: state.token}, null, 2)], {type: 'application/json'})
+      body: {kode}
     })
-      .then(response => response.json())
-      .then(data => {
-        commit('setAuthPending', false)
-        if (data.success) {
-          commit('setActive', true)
-          vm.$notify({
-            group: 'system',
-            title: 'Aktivasi berhasil.',
-            text: data.message,
-            type: 'success'
-          })
+      .then(({result}) => {
+        if (result.body.success) {
+          commit('setAuthPending', false)
           router.push('/')
-        } else {
-          commit('setAuthError', data.message)
         }
       })
-      .catch(error => {
-        commit('setAuthPending', false)
-        commit('setAuthError', error.message)
-      })
   },
-  signOut ({commit}) {
+  signOut ({commit, dispatch}) {
     commit('setUser', false)
     commit('setToken', null)
     commit('setLoggedIn', false)
-    vm.$notify({
-      group: 'system',
-      title: 'Keluar berhasil',
-      text: 'Anda berhasil keluar.',
-      type: 'success'
-    })
+    dispatch('notifySuccess', 'Logout berhasil!')
     router.push('/sign-in')
-  },
-  clearError ({commit}) {
-    commit('setAuthError', null)
   }
 }
 

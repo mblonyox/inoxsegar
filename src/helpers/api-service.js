@@ -31,7 +31,7 @@ export const WithToken = BaseService.extend({
     before ({payload, meta, next}) {
       if (!meta.requiresAuth) return next(payload)
       const token = store.state.auth.token
-      next({...payload, headers: { token }})
+      next({...payload, headers: { 'x-access-token': token }})
     },
     async fail ({meta, result, payload, next, retry}) {
       if (!meta.requiresAuth) return next(result)
