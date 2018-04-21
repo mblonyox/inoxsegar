@@ -78,7 +78,7 @@
 
 <script>
 import filesize from 'filesize'
-import serverUrl from '../helpers/backend-url'
+import { WithToken, NoNotify } from '../helpers/api-service'
 import ModalAddFile from './ModalAddFile'
 
 export default {
@@ -102,9 +102,6 @@ export default {
   computed: {
     isAdmin () {
       return this.$store.state.auth.user.admin
-    },
-    serverUrl () {
-      return serverUrl
     }
   },
   props: ['id'],
@@ -118,34 +115,21 @@ export default {
         movieId: this.id,
         fileId
       }
-      fetch(serverUrl + 'api/movie/add-file', {
+      WithToken.doRequest({
+        url: 'movie/add-file',
         method: 'POST',
-        mode: 'cors',
-        headers: new Headers({
-          'x-access-token': this.$store.state.auth.token
-        }),
-        body: new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'})
+        body: data
       })
-        .then(response => response.json())
-        .then(json => {
-          if (json.success) {
-            console.log(json.message)
-          }
-        })
     }
   },
   mounted () {
-    fetch(serverUrl + 'api/movie/' + this.id, {
-      method: 'GET',
-      mode: 'cors',
-      headers: new Headers({
-        'x-access-token': this.$store.state.auth.token
-      })
+    NoNotify.doRequest({
+      url: 'movie/' + this.id
     })
-      .then(response => response.json())
-      .then(json => {
-        if (json.success) {
-          this.movie = json.data.movie
+      .then(state => state.result.body)
+      .then(body => {
+        if (body.success) {
+          this.movie = body.data.movie
         }
       })
   }

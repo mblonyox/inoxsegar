@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import serverUrl from '../helpers/backend-url'
+import { NoNotify } from '../helpers/api-service'
 import filesize from 'filesize'
 
 export default {
@@ -63,26 +63,18 @@ export default {
     }
   },
   computed: {
-    serverUrl () {
-      return serverUrl
-    },
     isAdmin () {
       return this.$store.state.auth.admin
     }
   },
   mounted () {
-    let httpHeaders = new Headers({
-      'x-access-token': this.$store.state.auth.token
+    NoNotify.doRequest({
+      url: 'file'
     })
-    fetch(serverUrl + 'api/file', {
-      method: 'GET',
-      mode: 'cors',
-      headers: httpHeaders
-    })
-      .then(response => response.json())
-      .then(json => {
-        if (json.success) {
-          this.files = json.data.files
+      .then(status => status.result.body)
+      .then(body => {
+        if (body.success) {
+          this.files = body.data.files
         }
       })
   }

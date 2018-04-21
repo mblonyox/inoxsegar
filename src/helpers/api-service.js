@@ -5,8 +5,10 @@ import store from '../store'
 import serverUrl from './backend-url'
 import vm from '../main'
 
+const baseUrl = serverUrl + 'api'
+
 export const BaseService = new ApiService({adapter: fetch,
-  url: serverUrl + 'api',
+  url: baseUrl,
   hooks: {
     before ({payload, next}) {
       store.dispatch('pendingStart')
@@ -21,15 +23,20 @@ export const BaseService = new ApiService({adapter: fetch,
 
 const RefreshToken = BaseService.extend({
   url: 'refresh_token',
+  method: 'POST',
   hooks: {
     before ({payload, meta, next}) {
       const token = store.state.auth.token
       next({...payload, body: { token }})
     }
   }
-}).on('done', res => {
-  store.commit('setToken', res.body.token)
 })
+  .on('done', res => {
+    store.commit('setToken', res.body.token)
+  })
+  .on('fail', res => {
+    store.dispatch('signOut')
+  })
 
 export const WithToken = BaseService.extend({
   hooks: {
@@ -37,17 +44,26 @@ export const WithToken = BaseService.extend({
       const token = store.state.auth.token
       next({...payload, headers: { 'x-access-token': token }})
     },
-    async fail ({result, payload, next, retry}) {
+    async fail ({result, payload, next, done}) {
       if (result.status !== 401) return next(result)
-      const { success } = await RefreshToken.doSingleRequest()
+      const { success } = await RefreshToken.doSingleRequest({})
       if (success) {
-        retry(payload)
+        // retry(payload)
+        const url = payload.url.replace(baseUrl + '/', '')
+        const retryRequest = await NoNotify.doRequest({...payload, url})
+        if (retryRequest.success) {
+          done(retryRequest.result)
+        } else {
+          next(retryRequest.result)
+        }
       } else {
         next(result)
       }
     }
   }
 })
+
+export const NoNotify = WithToken.extend({}).off('done', doneLogger)
 
 function doneLogger (result) {
   if (result.body.success) store.dispatch('notifySuccess', result.body.message)

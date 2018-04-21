@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import serverUrl from '../helpers/backend-url'
+import { NoNotify } from '../helpers/api-service'
 
 export default {
   data () {
@@ -71,17 +71,13 @@ export default {
     }
   },
   mounted () {
-    fetch(serverUrl + 'api/movie', {
-      method: 'GET',
-      mode: 'cors',
-      headers: new Headers({
-        'x-access-token': this.$store.state.auth.token
-      })
+    NoNotify.doRequest({
+      url: 'movie'
     })
-      .then(response => response.json())
-      .then(json => {
-        if (json.success) {
-          this.movies = json.data.movies
+      .then(({result}) => result.body)
+      .then(body => {
+        if (body.success) {
+          this.movies = body.data.movies
         }
       })
   }
