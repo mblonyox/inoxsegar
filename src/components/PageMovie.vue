@@ -120,6 +120,12 @@ export default {
         method: 'POST',
         body: data
       })
+        .then(state => state.result.body)
+        .then(body => {
+          if (body.success) {
+            this.movie.files.push(body.data.file)
+          }
+        })
     }
   },
   mounted () {

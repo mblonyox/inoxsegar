@@ -136,11 +136,9 @@
 </template>
 
 <script>
-  import serverUrl from '../helpers/backend-url'
+  import { WithToken } from '../helpers/api-service'
   import noPoster from '../assets/no-poster.jpg'
   import apiKey from '../assets/omdb-api-key'
-
-  const apiUrl = serverUrl + 'api/'
 
   export default {
     data () {
@@ -201,20 +199,15 @@
           cast: this.cast,
           poster: this.poster
         }
-        fetch(apiUrl + 'movie', {
+        WithToken.doRequest({
+          url: 'movie',
           method: 'POST',
-          mode: 'cors',
-          headers: new Headers({
-            'x-access-token': this.$store.state.auth.token
-          }),
-          body: new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'})
+          body: data
         })
-          .then(res => res.json())
-          .then(data => {
-            if (data.success) {
+          .then(state => state.result.body)
+          .then(body => {
+            if (body.success) {
               this.$router.push('/movie')
-            } else {
-              console.log(data.message)
             }
           })
       }
