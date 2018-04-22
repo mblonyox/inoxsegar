@@ -22,7 +22,7 @@
         </div>
         <div class="field has-text-left">
           <label class="checkbox">
-            <input type="checkbox"> Ingat saya
+            <input v-model="remember" type="checkbox"> Ingat saya
           </label>
         </div>
         <button type="submit" class="button is-block is-info is-large" :class="{'is-loading': pending}">
@@ -47,6 +47,7 @@ export default {
     return {
       email: null,
       password: null,
+      remember: false,
       isValid: {
         email: null,
         emailHelper: '',
@@ -67,10 +68,11 @@ export default {
   },
   methods: {
     onSubmit () {
-      let credentials = { email: this.email, password: this.password }
-      let redirectTo = this.$route.query.redirect
+      const credentials = { email: this.email, password: this.password }
+      const remember = this.remember
+      const redirectTo = this.$route.query.redirect
       this.validateInput()
-      if (this.isValid.email && this.isValid.password) this.$store.dispatch('authenticate', { credentials, redirectTo })
+      if (this.isValid.email && this.isValid.password) this.$store.dispatch('authenticate', { credentials, remember, redirectTo })
     },
     validateInput () {
       if (!this.email) {

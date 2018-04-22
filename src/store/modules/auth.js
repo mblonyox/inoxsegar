@@ -41,11 +41,11 @@ const mutations = {
 }
 
 const actions = {
-  authenticate ({commit}, {credentials, redirectTo}) {
+  authenticate ({commit}, {credentials, remember, redirectTo}) {
     BaseService.doRequest({
       url: 'authenticate',
       method: 'POST',
-      body: credentials
+      body: {...credentials, remember}
     })
       .then(({result}) => {
         if (result.body.success) {
