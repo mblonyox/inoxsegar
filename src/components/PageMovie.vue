@@ -57,7 +57,7 @@
                 <span class="icon">
                   <i class="fa fa-thumbs-o-down"></i>
                 </span>
-                <a :href="serverUrl + file.uploaded_path + '/' + file.id + '/' + file.name">
+                <a :href="'/' + file.uploaded_path + '/' + file.id + '/' + file.name">
                   <span>
                     <i class="fa fa-download"></i>
                   </span>
