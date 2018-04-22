@@ -68,6 +68,10 @@ const actions = {
   pendingDone ({commit}) {
     commit('setPending', false)
     vm.$nprogress.done()
+  },
+  resetUi ({commit}) {
+    commit('setPending', false)
+    commit('clearNotification')
   }
 }
 

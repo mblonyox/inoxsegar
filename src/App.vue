@@ -12,6 +12,9 @@ import NprogressContainer from 'vue-nprogress/src/NprogressContainer'
 export default {
   components: {
     NprogressContainer
+  },
+  created () {
+    this.$store.dispatch('resetUi')
   }
 }
 </script>
