@@ -30,7 +30,7 @@
           <div class="navbar-item">
             <div class="field is-grouped">
               <p class="control">
-                <router-link class="button is-success" to="/upload" v-if="isAdmin">
+                <router-link class="button is-success" to="/upload">
                   <span class="icon">
                     <i class="fa fa-upload"></i>
                   </span>
