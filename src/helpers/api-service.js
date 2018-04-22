@@ -21,7 +21,7 @@ export const BaseService = new ApiService({adapter: fetch,
   .on('done', doneLogger)
   .on('finish', () => { store.dispatch('pendingDone') })
 
-const RefreshToken = BaseService.extend({
+export const RefreshToken = BaseService.extend({
   url: 'refresh_token',
   method: 'POST',
   hooks: {
@@ -31,6 +31,7 @@ const RefreshToken = BaseService.extend({
     }
   }
 })
+  .off('done', doneLogger)
   .on('done', res => {
     store.commit('setToken', res.body.token)
   })
@@ -44,18 +45,11 @@ export const WithToken = BaseService.extend({
       const token = store.state.auth.token
       next({...payload, headers: { 'x-access-token': token }})
     },
-    async fail ({result, payload, next, done}) {
+    async fail ({result, payload, next, done, retry}) {
       if (result.status !== 401) return next(result)
       const { success } = await RefreshToken.doSingleRequest({})
       if (success) {
-        // retry(payload)
-        const url = payload.url.replace(baseUrl + '/', '')
-        const retryRequest = await NoNotify.doRequest({...payload, url})
-        if (retryRequest.success) {
-          done(retryRequest.result)
-        } else {
-          next(retryRequest.result)
-        }
+        retry(payload)
       } else {
         next(result)
       }
