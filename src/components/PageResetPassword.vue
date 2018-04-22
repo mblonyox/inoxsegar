@@ -12,7 +12,7 @@
       <form @submit.prevent="onSubmit" v-else>
         <div class="field">
           <div class="control has-icons-left">
-            <input class="input is-large" type="email" placeholder="Email" autofocus="" v-model="email" required :disabled="pending">
+            <input class="input is-large" type="email" placeholder="Email" autofocus="" autocomplete="email" v-model="email" required :disabled="pending">
             <span class="icon is-small is-left">
               <i class="fa fa-envelope"></i>
             </span>

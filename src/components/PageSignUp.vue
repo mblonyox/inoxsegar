@@ -9,7 +9,7 @@
       <form @submit.prevent="onSubmit">
         <div class="field">
           <div class="control has-icons-left">
-            <input class="input is-large" :class="{'is-danger': isValid.username == false}" type="text" v-model="username" placeholder="Nama Pengguna" autofocus="" required :disabled="pending">
+            <input class="input is-large" :class="{'is-danger': isValid.username == false}" type="text" v-model="username" placeholder="Nama Pengguna" autofocus="" autocomplete="username" required :disabled="pending">
             <span class="icon is-small is-left">
               <i class="fa fa-user"></i>
             </span>
@@ -18,7 +18,7 @@
         </div>
         <div class="field">
           <div class="control has-icons-left">
-            <input class="input is-large" :class="{'is-danger': isValid.email == false}" type="email" v-model="email" placeholder="Email" required :disabled="pending">
+            <input class="input is-large" :class="{'is-danger': isValid.email == false}" type="email" v-model="email" placeholder="Email" autocomplete="email" required :disabled="pending">
             <span class="icon is-small is-left">
               <i class="fa fa-envelope"></i>
             </span>
