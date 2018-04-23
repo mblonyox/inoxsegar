@@ -42,7 +42,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="file in movie.files" :key="file.id">
+            <tr v-for="file in movie.files" :key="file._id">
               <td>{{ movie.files.indexOf(file) + 1}}</td>
               <td>{{ file.name }}</td>
               <td>{{ humanFilesize(file.size) }}</td>
@@ -57,7 +57,7 @@
                 <span class="icon">
                   <i class="fa fa-thumbs-o-down"></i>
                 </span>
-                <a :href="'/' + file.uploaded_path + '/' + file.id + '/' + file.name">
+                <a :href="'/api/download/' + file._id">
                   <span>
                     <i class="fa fa-download"></i>
                   </span>
