@@ -15,7 +15,7 @@
           <span class="icon is-small is-left">
             <i class="fa fa-key"></i>
           </span>
-          <p class="help is-danger has-text-left" v-if="!isValid.kode">{{ isValid.kodeHelper }}</p>
+          <p class="help is-danger has-text-left">{{ isValid.kodeHelper }}</p>
         </div>
         <button type="submit" class="button is-block is-info is-large" :class="{'is-loading': pending}">
           <span>Aktivasi</span>

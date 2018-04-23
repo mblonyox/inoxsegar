@@ -13,7 +13,7 @@
             <span class="icon is-small is-left">
               <i class="fa fa-user"></i>
             </span>
-            <p class="help is-danger has-text-left" v-if="!isValid.username">{{ isValid.usernameHelper }}</p>
+            <p class="help is-danger has-text-left">{{ isValid.usernameHelper }}</p>
           </div>
         </div>
         <div class="field">
@@ -22,7 +22,7 @@
             <span class="icon is-small is-left">
               <i class="fa fa-envelope"></i>
             </span>
-            <p class="help is-danger has-text-left" v-if="!isValid.email">{{ isValid.emailHelper }}</p>
+            <p class="help is-danger has-text-left">{{ isValid.emailHelper }}</p>
           </div>
         </div>
         <div class="field">
@@ -31,7 +31,7 @@
             <span class="icon is-small is-left">
               <i class="fa fa-lock"></i>
             </span>
-            <p class="help is-danger has-text-left" v-if="!isValid.password">{{ isValid.passwordHelper }}</p>
+            <p class="help is-danger has-text-left">{{ isValid.passwordHelper }}</p>
           </div>
         </div>
         <div class="field">
@@ -40,7 +40,7 @@
             <span class="icon is-small is-left">
               <i class="fa fa-lock"></i>
             </span>
-            <p class="help is-danger has-text-left" v-if="!isValid.confirmation">{{ isValid.confirmationHelper }}</p>
+            <p class="help is-danger has-text-left">{{ isValid.confirmationHelper }}</p>
           </div>
         </div>
         <hr>

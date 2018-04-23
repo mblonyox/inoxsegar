@@ -17,7 +17,7 @@
             <span class="icon is-small is-left">
               <i class="fa fa-lock"></i>
             </span>
-            <p class="help is-danger has-text-left" v-if="!isValid.password">{{ isValid.passwordHelper }}</p>
+            <p class="help is-danger has-text-left">{{ isValid.passwordHelper }}</p>
           </div>
         </div>
         <div class="field">
@@ -26,7 +26,7 @@
             <span class="icon is-small is-left">
               <i class="fa fa-lock"></i>
             </span>
-            <p class="help is-danger has-text-left" v-if="!isValid.confirmation">{{ isValid.confirmationHelper }}</p>
+            <p class="help is-danger has-text-left">{{ isValid.confirmationHelper }}</p>
           </div>
         </div>
         <button type="submit" class="button is-block is-info is-large" :class="{'is-loading': pending}">

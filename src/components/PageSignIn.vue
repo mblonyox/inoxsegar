@@ -10,15 +10,15 @@
       <form @submit.prevent="onSubmit">
         <div class="field">
           <div class="control">
-            <input class="input is-large" :class="{'is-danger': isValid.email == false}" type="email" placeholder="Email" autofocus="" autocomplete="email" v-model="email" required :disabled="pending">
+            <input class="input is-large" :class="{'is-danger': isValid.email === false}" type="email" placeholder="Email" autofocus="" autocomplete="email" v-model="email" required :disabled="pending">
           </div>
-          <p class="help is-danger has-text-left" v-if="!isValid.email">{{ isValid.emailHelper }}</p>
+          <p class="help is-danger has-text-left">{{ isValid.emailHelper }}</p>
         </div>
         <div class="field">
           <div class="control">
-            <input class="input is-large" :class="{'is-danger': isValid.password == false}" type="password" placeholder="Sandi" autocomplete="current-password" v-model="password" required :disabled="pending">
+            <input class="input is-large" :class="{'is-danger': isValid.password === false}" type="password" placeholder="Sandi" autocomplete="current-password" v-model="password" required :disabled="pending">
           </div>
-          <p class="help is-danger has-text-left" v-if="!isValid.password">{{ isValid.passwordHelper }}</p>
+          <p class="help is-danger has-text-left">{{ isValid.passwordHelper }}</p>
         </div>
         <div class="field has-text-left">
           <label class="checkbox">
@@ -45,8 +45,8 @@ import defaultAvatar from '../assets/mblonyox-logo-sm.png'
 export default {
   data () {
     return {
-      email: null,
-      password: null,
+      email: '',
+      password: '',
       remember: false,
       isValid: {
         email: null,
