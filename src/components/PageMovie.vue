@@ -57,7 +57,7 @@
                 <span class="icon">
                   <i class="fa fa-thumbs-o-down"></i>
                 </span>
-                <a :href="'/api/download/' + file._id">
+                <a :href="`/api/download/${file._id}?token=${getToken}`">
                   <span>
                     <i class="fa fa-download"></i>
                   </span>
@@ -102,6 +102,9 @@ export default {
   computed: {
     isAdmin () {
       return this.$store.state.auth.user.admin
+    },
+    getToken () {
+      return this.$store.state.auth.token
     }
   },
   props: ['id'],
