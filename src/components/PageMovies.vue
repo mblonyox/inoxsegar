@@ -52,17 +52,20 @@
           </router-link>
         </div>
       </div>
+      <infinite-loading @infinite="infiniteHandler" />
     </div>
   </section>
 </template>
 
 <script>
+import InfiniteLoading from 'vue-infinite-loading'
 import { NoNotify } from '../helpers/api-service'
 
 export default {
   data () {
     return {
-      movies: []
+      movies: [],
+      page: 1
     }
   },
   computed: {
@@ -70,16 +73,43 @@ export default {
       return this.$store.state.auth.user.admin
     }
   },
-  mounted () {
-    NoNotify.doRequest({
-      url: 'movie'
-    })
-      .then(({result}) => result.body)
-      .then(body => {
-        if (body.success) {
-          this.movies = body.data.movies
+  methods: {
+    getInitialData () {
+      NoNotify.doRequest({
+        url: 'movie'
+      })
+        .then(({result}) => result.body)
+        .then(body => {
+          if (body.success) {
+            this.movies = body.data.movies
+          }
+        })
+    },
+    infiniteHandler ($state) {
+      this.page++
+      NoNotify.doRequest({
+        url: 'movie',
+        query: {
+          page: this.page
         }
       })
+        .then(({result}) => result.body)
+        .then(body => {
+          if (body.success) {
+            this.movies = this.movies.concat(body.data.movies)
+            $state.loaded()
+            if (body.data.movies.length < 20) {
+              $state.complete()
+            }
+          }
+        })
+    }
+  },
+  mounted () {
+    this.getInitialData()
+  },
+  components: {
+    InfiniteLoading
   }
 }
 </script>

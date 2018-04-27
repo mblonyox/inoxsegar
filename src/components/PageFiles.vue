@@ -21,9 +21,9 @@
             <td>{{ files.indexOf(file) + 1}}</td>
             <td>{{ file.name }}</td>
             <td>{{ humanFilesize(file.size) }}</td>
-            <td> <router-link :to="{name: 'PageUser', params: {id: file.uploader._id }}">{{ file.uploader.username }}</router-link> </td>
+            <td> <router-link :to="{name: 'PageUser', params: {id: file.uploader._id }}" v-if="file.uploader">{{ file.uploader.username }}</router-link> </td>
             <td>{{ (new Date(file.date)).toLocaleString('id-ID') }}</td>
-            <td><router-link :to="file.koleksi.tipe + '/' + file.koleksi.data._id" v-if="file.koleksi">{{file.koleksi.data.title}} ({{file.koleksi.data.year}})</router-link><span v-else>Non-koleksi</span></td>
+            <td><router-link :to="file.koleksi.tipe + '/' + file.koleksi.data._id" v-if="file.koleksi && file.koleksi.data">{{file.koleksi.data.title}} ({{file.koleksi.data.year}})</router-link><span v-else>Non-koleksi</span></td>
             <td>
               <span class="icon">
                 <i class="fa fa-thumbs-o-up"></i>
@@ -41,6 +41,11 @@
               </span>
             </td>
           </tr>
+          <tr>
+            <td colspan="7">
+              <infinite-loading @infinite="infiniteHandler" />
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -48,18 +53,50 @@
 </template>
 
 <script>
+import InfiniteLoading from 'vue-infinite-loading'
 import { NoNotify } from '../helpers/api-service'
 import filesize from 'filesize'
 
 export default {
   data () {
     return {
-      files: []
+      files: [],
+      page: 1
     }
   },
   methods: {
     humanFilesize (bytes) {
       return filesize(bytes)
+    },
+    getInitialData () {
+      NoNotify.doRequest({
+        url: 'file'
+      })
+        .then(status => status.result.body)
+        .then(body => {
+          if (body.success) {
+            this.files = body.data.files
+          }
+        })
+    },
+    infiniteHandler ($state) {
+      this.page++
+      NoNotify.doRequest({
+        url: 'file',
+        query: {
+          page: this.page
+        }
+      })
+        .then(status => status.result.body)
+        .then(body => {
+          if (body.success) {
+            this.files = this.files.concat(body.data.files)
+            $state.loaded()
+            if (body.data.files.length < 20) {
+              $state.complete()
+            }
+          }
+        })
     }
   },
   computed: {
@@ -70,16 +107,11 @@ export default {
       return this.$store.state.auth.token
     }
   },
+  components: {
+    InfiniteLoading
+  },
   mounted () {
-    NoNotify.doRequest({
-      url: 'file'
-    })
-      .then(status => status.result.body)
-      .then(body => {
-        if (body.success) {
-          this.files = body.data.files
-        }
-      })
+    this.getInitialData()
   }
 }
 </script>
