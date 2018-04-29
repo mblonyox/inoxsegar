@@ -63,11 +63,11 @@ const actions = {
   },
   pendingStart ({commit}) {
     commit('setPending', true)
-    vm.$nprogress.start()
+    if (vm) vm.$nprogress.start()
   },
   pendingDone ({commit}) {
     commit('setPending', false)
-    vm.$nprogress.done()
+    if (vm) vm.$nprogress.done()
   },
   resetUi ({commit}) {
     commit('setPending', false)
