@@ -43,7 +43,7 @@
                         cancelButtonText: 'Jangan, nanti saja.'
                     }).then((result) => {
                       if (result.value) {
-                        window.location.reload()
+                        window.location.reload(true)
                       }
                     })
                     break;
