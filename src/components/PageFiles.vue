@@ -61,23 +61,12 @@ export default {
   data () {
     return {
       files: [],
-      page: 1
+      page: 0
     }
   },
   methods: {
     humanFilesize (bytes) {
       return filesize(bytes)
-    },
-    getInitialData () {
-      NoNotify.doRequest({
-        url: 'file'
-      })
-        .then(status => status.result.body)
-        .then(body => {
-          if (body.success) {
-            this.files = body.data.files
-          }
-        })
     },
     infiniteHandler ($state) {
       this.page++
@@ -109,9 +98,6 @@ export default {
   },
   components: {
     InfiniteLoading
-  },
-  mounted () {
-    this.getInitialData()
   }
 }
 </script>

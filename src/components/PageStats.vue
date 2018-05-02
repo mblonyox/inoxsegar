@@ -45,7 +45,7 @@ import filesize from 'filesize'
 export default {
   data: () => ({
     logs: [],
-    page: 1
+    page: 0
   }),
   computed: {
     isAdmin () {
@@ -55,17 +55,6 @@ export default {
   methods: {
     humanFilesize (bytes) {
       return filesize(bytes)
-    },
-    getInitialData () {
-      NoNotify.doRequest({
-        url: 'log_download'
-      })
-        .then(status => status.result.body)
-        .then(body => {
-          if (body.success) {
-            this.logs = body.data.logs
-          }
-        })
     },
     infiniteHandler ($state) {
       this.page++
@@ -89,11 +78,6 @@ export default {
   },
   components: {
     InfiniteLoading
-  },
-  mounted () {
-    if (this.isAdmin) {
-      this.getInitialData()
-    }
   }
 }
 </script>

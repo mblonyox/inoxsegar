@@ -65,7 +65,7 @@ export default {
   data () {
     return {
       movies: [],
-      page: 1
+      page: 0
     }
   },
   computed: {
@@ -74,17 +74,6 @@ export default {
     }
   },
   methods: {
-    getInitialData () {
-      NoNotify.doRequest({
-        url: 'movie'
-      })
-        .then(({result}) => result.body)
-        .then(body => {
-          if (body.success) {
-            this.movies = body.data.movies
-          }
-        })
-    },
     infiniteHandler ($state) {
       this.page++
       NoNotify.doRequest({
@@ -104,9 +93,6 @@ export default {
           }
         })
     }
-  },
-  mounted () {
-    this.getInitialData()
   },
   components: {
     InfiniteLoading
