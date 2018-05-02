@@ -7,7 +7,7 @@
           </div>
           <div class="column is-9">
             <div class="box content">
-              <article class="topic" v-for="topic in topics">
+              <article class="topic" v-for="topic in topics" :key="topic._id">
                 <h4 class="is-size-4">{{topic.title}}</h4>
                 <div class="media">
                   <div class="media-left">

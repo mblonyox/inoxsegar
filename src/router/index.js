@@ -22,6 +22,7 @@ import PageMovie from '@/components/PageMovie'
 import PageResetPassword from '@/components/PageResetPassword'
 import PageChangePassword from '@/components/PageChangePassword'
 import PageForumIndex from '@/components/PageForumIndex'
+import PageStats from '@/components/PageStats'
 
 Vue.use(Router)
 
@@ -83,6 +84,11 @@ const router = new Router({
           path: 'forum',
           name: 'PageForumIndex',
           component: PageForumIndex
+        },
+        {
+          path: 'stats',
+          name: 'PageStats',
+          component: PageStats
         }
       ]
     },
