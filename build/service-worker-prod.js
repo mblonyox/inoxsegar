@@ -35,6 +35,17 @@
                     // fresh content will have been added to the cache.
                     // It's the perfect time to display a "New content is
                     // available; please refresh." message in the page's interface.
+                    window.swal({
+                        title: 'Update!',
+                        text: 'Pembaruan aplikasi telah diterima. Muat ulang sekarang?',
+                        showCancelButton: true,
+                        confirmButtonText: 'Oke! Muat sekarang!',
+                        cancelButtonText: 'Jangan, nanti saja.'
+                    }).then((result) => {
+                      if (result.value) {
+                        window.location.reload()
+                      }
+                    })
                     break;
 
                   case 'redundant':

@@ -14,6 +14,8 @@ import 'font-awesome/css/font-awesome.css'
 
 Vue.config.productionTip = false
 
+window.swal = Vue.swal
+
 /* eslint-disable no-new */
 export default new Vue({
   el: '#app',
