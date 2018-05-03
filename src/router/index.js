@@ -10,8 +10,7 @@ import LayoutPlain from '@/components/LayoutPlain'
 import PageHome from '@/components/PageHome'
 import PageMovies from '@/components/PageMovies'
 import PageNewMovie from '@/components/PageNewMovie'
-import PageTv from '@/components/PageTv'
-import PageAnime from '@/components/PageAnime'
+import PageSeries from '@/components/PageSeries'
 import PageSignIn from '@/components/PageSignIn'
 import PageSignUp from '@/components/PageSignUp'
 import PageUpload from '@/components/PageUpload'
@@ -50,14 +49,9 @@ const router = new Router({
           component: PageNewMovie
         },
         {
-          path: 'tv',
-          name: 'PageTv',
-          component: PageTv
-        },
-        {
-          path: 'anime',
-          name: 'PageAnime',
-          component: PageAnime
+          path: 'series',
+          name: 'PageSeries',
+          component: PageSeries
         },
         {
           path: 'upload',
