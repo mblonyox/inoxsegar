@@ -18,7 +18,7 @@
             <a class="navbar-link">Koleksi</a>
             <div class="navbar-dropdown is-boxed">
               <router-link class="navbar-item" exact-active-class="is-active" to="/movie">Movies</router-link>
-              <router-link class="navbar-item" exact-active-class="is-active" to="/series">TVs</router-link>
+              <router-link class="navbar-item" exact-active-class="is-active" to="/series">Series</router-link>
             </div>
           </div>
           <router-link class="navbar-item" exact-active-class="is-active" to="/files">Files</router-link>

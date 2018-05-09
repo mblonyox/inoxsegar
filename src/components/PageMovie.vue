@@ -35,36 +35,13 @@
             <tr>
               <th>#</th>
               <th>Nama File</th>
-              <th>Ukuran</th>
-              <th>Uploader</th>
-              <th>Tanggal</th>
-              <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="file in movie.files" :key="file._id">
               <td>{{ movie.files.indexOf(file) + 1}}</td>
-              <td>{{ file.name }}</td>
-              <td>{{ humanFilesize(file.size) }}</td>
               <td>
-                <router-link :to="{name: 'PageUser', params: {id: file.uploader._id }}">{{ file.uploader.username }}</router-link>
-              </td>
-              <td>{{ (new Date(file.date)).toLocaleString('id-ID') }}</td>
-              <td>
-                <span class="icon">
-                  <i class="fa fa-thumbs-o-up"></i>
-                </span>
-                <span class="icon">
-                  <i class="fa fa-thumbs-o-down"></i>
-                </span>
-                <a :href="`/api/download/${file._id}?token=${getToken}`">
-                  <span>
-                    <i class="fa fa-download"></i>
-                  </span>
-                </a>
-                <span class="icon" v-if="$store.state.auth.admin">
-                  <i class="fa fa-wrench"></i>
-                </span>
+                <card-file-list :file="file" @updateFile="handleUpdateFile" :hideKoleksi="true" />
               </td>
             </tr>
           </tbody>
@@ -77,7 +54,7 @@
 </template>
 
 <script>
-import filesize from 'filesize'
+import CardFileList from './CardFileList'
 import { WithToken, NoNotify } from '../helpers/api-service'
 import ModalAddFile from './ModalAddFile'
 
@@ -102,16 +79,17 @@ export default {
   computed: {
     isAdmin () {
       return this.$store.state.auth.user.admin
-    },
-    getToken () {
-      return this.$store.state.auth.token
     }
   },
   props: ['id'],
-  components: {ModalAddFile},
+  components: {
+    ModalAddFile,
+    CardFileList
+  },
   methods: {
-    humanFilesize (bytes) {
-      return filesize(bytes)
+    handleUpdateFile (newFile) {
+      let index = this.movie.files.findIndex(files => files._id === newFile._id)
+      this.movie.files.splice(index, 1, newFile)
     },
     onModalSubmit (fileId) {
       const data = {
