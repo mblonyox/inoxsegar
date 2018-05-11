@@ -36,11 +36,30 @@
                   <span>Upload</span>
                 </router-link>
               </p>
-              <p class="control">
-                <a class="button is-danger" @click.stop="doSignOut">
-                  <span>Sign Out</span>
-                </a>
-              </p>
+            </div>
+          </div>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">{{ username }}</a>
+            <div class="navbar-dropdown is-right">
+              <router-link 
+                class="navbar-item"
+                exact-active-class="is-active"
+                :to="{name: 'PageUser', params: {id: userId }}"
+              >
+                <div class="media">
+                  <div class="media-left">
+                    <figure class="image is-48x48">
+                      <img class="avatar" :src="avatar" alt="my-avatar">
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <b>{{ username }}</b>
+                    <p>{{ email }}</p>
+                  </div>
+                </div>
+              </router-link>
+              <hr class="navbar-divider">
+              <a @click.prevent="doSignOut" class="navbar-item">Keluar</a>
             </div>
           </div>
         </div>
@@ -50,8 +69,25 @@
 </template>
 
 <script>
+  import md5 from 'md5'
+  import defaultAvatar from '../assets/mblonyox-logo-sm.png'
+
   export default {
     computed: {
+      avatar () {
+        if (/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.email)) {
+          return 'https://www.gravatar.com/avatar/' + md5(this.email) + '?d=wavatar&s=150'
+        } else return defaultAvatar
+      },
+      userId () {
+        return this.$store.state.auth.user.id
+      },
+      username () {
+        return this.$store.state.auth.user.username
+      },
+      email () {
+        return this.$store.state.auth.user.email
+      },
       isAdmin () {
         return this.$store.state.auth.user.admin
       }
@@ -69,6 +105,11 @@
 
 .inox-logo {
   font-family: 'Lobster', cursive;
+}
+
+img.avatar {
+  border-radius: 50%;
+  max-height: 48px;
 }
 </style>
 

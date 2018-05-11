@@ -41,7 +41,7 @@
             <tr v-for="file in movie.files" :key="file._id">
               <td>{{ movie.files.indexOf(file) + 1}}</td>
               <td>
-                <card-file-list :file="file" @updateFile="handleUpdateFile" :hideKoleksi="true" />
+                <card-file-list :file="file" @updateFile="handleUpdateFile" :hideKoleksi="true" :expandDefault="true" />
               </td>
             </tr>
           </tbody>

@@ -166,6 +166,9 @@ export default {
       this.$emit('updateFile', newFile)
     }
   },
-  props: ['file', 'hideKoleksi']
+  mounted () {
+    if (this.expandDefault) this.expand = true
+  },
+  props: ['file', 'hideKoleksi', 'expandDefault']
 }
 </script>
