@@ -71,7 +71,7 @@
   import defaultAvatar from '../assets/mblonyox-logo-sm.png'
 
   export default {
-    data () {
+    data() {
       return {
         username: null,
         email: null,
@@ -90,17 +90,17 @@
       }
     },
     computed: {
-      avatar () {
+      avatar() {
         if (/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.email)) {
           return 'https://www.gravatar.com/avatar/' + md5(this.email) + '?d=wavatar&s=150'
         } else return defaultAvatar
       },
-      pending () {
+      pending() {
         return this.$store.state.ui.pending
       }
     },
     methods: {
-      onSubmit () {
+      onSubmit() {
         this.validateInput()
         if (this.isValid.email && this.isValid.username && this.isValid.password && this.isValid.confirmation) {
           this.$store.dispatch('register', {
@@ -110,7 +110,7 @@
           })
         }
       },
-      validateInput () {
+      validateInput() {
         if (!this.username) {
           this.isValid.username = false
           this.isValid.usernameHelper = 'Nama Pengguna harus diisi!'
@@ -155,7 +155,7 @@
           this.isValid.confirmationHelper = ''
         }
       },
-      clearInputs () {
+      clearInputs() {
         this.username = null
         this.email = null
         this.password = null

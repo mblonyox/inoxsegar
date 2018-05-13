@@ -43,7 +43,7 @@ import md5 from 'md5'
 import defaultAvatar from '../assets/mblonyox-logo-sm.png'
 
 export default {
-  data () {
+  data() {
     return {
       email: '',
       password: '',
@@ -57,24 +57,24 @@ export default {
     }
   },
   computed: {
-    avatar () {
+    avatar() {
       if (/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.email)) {
         return 'https://www.gravatar.com/avatar/' + md5(this.email) + '?d=wavatar&s=150'
       } else return defaultAvatar
     },
-    pending () {
+    pending() {
       return this.$store.state.ui.pending
     }
   },
   methods: {
-    onSubmit () {
+    onSubmit() {
       const credentials = { email: this.email, password: this.password }
       const remember = this.remember
       const redirectTo = this.$route.query.redirect
       this.validateInput()
       if (this.isValid.email && this.isValid.password) this.$store.dispatch('authenticate', { credentials, remember, redirectTo })
     },
-    validateInput () {
+    validateInput() {
       if (!this.email) {
         this.isValid.email = false
         this.isValid.emailHelper = 'Email harus diisi!'

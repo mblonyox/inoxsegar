@@ -59,7 +59,7 @@ import { WithToken, NoNotify } from '../helpers/api-service'
 import ModalAddFile from './ModalAddFile'
 
 export default {
-  data () {
+  data() {
     return {
       movie: {},
       details: [
@@ -77,7 +77,7 @@ export default {
     }
   },
   computed: {
-    isAdmin () {
+    isAdmin() {
       return this.$store.state.auth.user.admin
     }
   },
@@ -87,11 +87,11 @@ export default {
     CardFileList
   },
   methods: {
-    handleUpdateFile (newFile) {
+    handleUpdateFile(newFile) {
       let index = this.movie.files.findIndex(files => files._id === newFile._id)
       this.movie.files.splice(index, 1, newFile)
     },
-    onModalSubmit (fileId) {
+    onModalSubmit(fileId) {
       const data = {
         movieId: this.id,
         fileId
@@ -109,7 +109,7 @@ export default {
         })
     }
   },
-  mounted () {
+  mounted() {
     NoNotify.doRequest({
       url: 'movie/' + this.id
     })

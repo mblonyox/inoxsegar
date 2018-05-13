@@ -14,7 +14,7 @@ const state = {
 }
 
 const mutations = {
-  setUser (state, user) {
+  setUser(state, user) {
     if (user) {
       state.user.id = user._id
       state.user.username = user.username
@@ -29,19 +29,19 @@ const mutations = {
       state.user.active = false
     }
   },
-  setToken (state, token) {
+  setToken(state, token) {
     state.token = token
   },
-  setActive (state, isActive) {
+  setActive(state, isActive) {
     state.user.active = isActive
   },
-  setLoggedIn (state, isLoggedIn) {
+  setLoggedIn(state, isLoggedIn) {
     state.loggedIn = isLoggedIn
   }
 }
 
 const actions = {
-  authenticate ({commit}, {credentials, remember, redirectTo}) {
+  authenticate({commit}, {credentials, remember, redirectTo}) {
     BaseService.doRequest({
       url: 'authenticate',
       method: 'POST',
@@ -57,7 +57,7 @@ const actions = {
         }
       })
   },
-  register ({commit}, data) {
+  register({commit}, data) {
     BaseService.doRequest({
       url: 'register',
       method: 'POST',
@@ -72,7 +72,7 @@ const actions = {
         }
       })
   },
-  activate ({commit, state}, kode) {
+  activate({commit, state}, kode) {
     WithToken.doRequest({
       url: 'activate',
       method: 'POST',
@@ -85,7 +85,7 @@ const actions = {
         }
       })
   },
-  signOut ({commit, dispatch}) {
+  signOut({commit, dispatch}) {
     commit('setUser', false)
     commit('setToken', null)
     commit('setLoggedIn', false)

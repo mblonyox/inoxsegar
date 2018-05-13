@@ -10,6 +10,8 @@ import LayoutPlain from '@/components/LayoutPlain'
 import PageHome from '@/components/PageHome'
 import PageMovies from '@/components/PageMovies'
 import PageNewMovie from '@/components/PageNewMovie'
+import PageSeriesIndex from '@/components/PageSeriesIndex'
+import PageNewSeries from '@/components/PageNewSeries'
 import PageSeries from '@/components/PageSeries'
 import PageSignIn from '@/components/PageSignIn'
 import PageSignUp from '@/components/PageSignUp'
@@ -50,6 +52,16 @@ const router = new Router({
         },
         {
           path: 'series',
+          name: 'PageSeriesIndex',
+          component: PageSeriesIndex
+        },
+        {
+          path: 'series/new',
+          name: 'PageNewSeries',
+          component: PageNewSeries
+        },
+        {
+          path: 'series/:id',
           name: 'PageSeries',
           component: PageSeries
         },

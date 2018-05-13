@@ -48,15 +48,15 @@ export default {
     page: 0
   }),
   computed: {
-    isAdmin () {
+    isAdmin() {
       return this.$store.state.auth.user.admin
     }
   },
   methods: {
-    humanFilesize (bytes) {
+    humanFilesize(bytes) {
       return filesize(bytes)
     },
-    infiniteHandler ($state) {
+    infiniteHandler($state) {
       this.page++
       NoNotify.doRequest({
         url: 'log_download',

@@ -6,22 +6,22 @@ const state = {
 }
 
 const mutations = {
-  pushNotification (state, notification) {
+  pushNotification(state, notification) {
     state.notifications.push(notification)
   },
-  removeNotification (state, notification) {
+  removeNotification(state, notification) {
     state.notifications.splice(state.notifications.findIndex(notification), 1)
   },
-  clearNotification (state) {
+  clearNotification(state) {
     state.notification = []
   },
-  setPending (state, isPending) {
+  setPending(state, isPending) {
     state.pending = !!isPending
   }
 }
 
 const actions = {
-  notifySuccess ({commit}, message) {
+  notifySuccess({commit}, message) {
     const notification = {
       group: 'system',
       type: 'success',
@@ -31,7 +31,7 @@ const actions = {
     commit('pushNotification', notification)
     vm.$notify(notification)
   },
-  notifyWarning ({commit}, message) {
+  notifyWarning({commit}, message) {
     const notification = {
       group: 'system',
       type: 'warning',
@@ -41,7 +41,7 @@ const actions = {
     commit('pushNotification', notification)
     vm.$notify(notification)
   },
-  notifyInfo ({commit}, message) {
+  notifyInfo({commit}, message) {
     const notification = {
       group: 'system',
       type: 'info',
@@ -51,7 +51,7 @@ const actions = {
     commit('pushNotification', notification)
     vm.$notify(notification)
   },
-  notifyError ({commit}, message) {
+  notifyError({commit}, message) {
     const notification = {
       group: 'system',
       type: 'error',
@@ -61,15 +61,15 @@ const actions = {
     commit('pushNotification', notification)
     vm.$notify(notification)
   },
-  pendingStart ({commit}) {
+  pendingStart({commit}) {
     commit('setPending', true)
     if (vm) vm.$nprogress.start()
   },
-  pendingDone ({commit}) {
+  pendingDone({commit}) {
     commit('setPending', false)
     if (vm) vm.$nprogress.done()
   },
-  resetUi ({commit}) {
+  resetUi({commit}) {
     commit('setPending', false)
     commit('clearNotification')
   }

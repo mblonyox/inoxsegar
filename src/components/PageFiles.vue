@@ -35,18 +35,18 @@ import InfiniteLoading from 'vue-infinite-loading'
 import { NoNotify } from '../helpers/api-service'
 
 export default {
-  data () {
+  data() {
     return {
       files: [],
       page: 0
     }
   },
   methods: {
-    handleUpdateFile (newFile) {
+    handleUpdateFile(newFile) {
       let index = this.files.findIndex(files => files._id === newFile._id)
       this.files.splice(index, 1, newFile)
     },
-    infiniteHandler ($state) {
+    infiniteHandler($state) {
       this.page++
       NoNotify.doRequest({
         url: 'file',

@@ -34,7 +34,7 @@ import defaultAvatar from '../assets/mblonyox-logo-sm.png'
 import { WithToken } from '../helpers/api-service'
 
 export default {
-  data () {
+  data() {
     return {
       kode: null,
       isValid: {
@@ -45,29 +45,29 @@ export default {
     }
   },
   computed: {
-    avatar () {
+    avatar() {
       if (/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.email)) {
         return 'https://www.gravatar.com/avatar/' + md5(this.email) + '?d=wavatar&s=150'
       } else return defaultAvatar
     },
-    username () {
+    username() {
       return this.$store.state.auth.user.username
     },
-    email () {
+    email() {
       return this.$store.state.auth.user.email
     },
-    pending () {
+    pending() {
       return this.$store.state.ui.pending
     }
   },
   methods: {
-    signOut () {
+    signOut() {
       this.$store.dispatch('signOut')
     },
-    activate () {
+    activate() {
       this.$store.dispatch('activate', this.kode)
     },
-    resendActivation () {
+    resendActivation() {
       WithToken.doRequest({
         url: 'resend_activation'
       })
@@ -78,7 +78,7 @@ export default {
           }
         })
     },
-    closeError () {
+    closeError() {
       this.$store.dispatch('clearError')
     }
   }

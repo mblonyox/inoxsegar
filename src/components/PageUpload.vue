@@ -44,10 +44,10 @@
 <script>
   export default {
     computed: {
-      queue () {
+      queue() {
         return this.$store.state.upload.queue
       },
-      startedAll () {
+      startedAll() {
         for (let index = 0; index < this.queue.length; index++) {
           if (this.queue[index].status === 'started') return true
         }
@@ -55,28 +55,28 @@
       }
     },
     methods: {
-      handleFile (event) {
+      handleFile(event) {
         const file = event.target.files[0]
         this.$store.dispatch('addUpload', file)
       },
-      removeSingle (queue) {
+      removeSingle(queue) {
         this.pauseSingle(queue)
         this.$store.commit('removeUploadQueue', queue)
       },
-      startSingle (queue) {
+      startSingle(queue) {
         this.$store.dispatch('startUploadSingle', queue)
       },
-      pauseSingle (queue) {
+      pauseSingle(queue) {
         this.$store.dispatch('pauseUploadSingle', queue)
       },
-      startAll () {
+      startAll() {
         this.$store.dispatch('startUploadAll')
       },
-      pauseAll () {
+      pauseAll() {
         this.$store.dispatch('pauseUploadAll')
       }
     },
-    mounted () {
+    mounted() {
       this.$store.dispatch('clearEmptyFileQueue')
     }
   }

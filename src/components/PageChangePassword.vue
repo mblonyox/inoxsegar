@@ -55,17 +55,17 @@
       success: false
     }),
     computed: {
-      avatar () {
+      avatar() {
         if (/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.email)) {
           return 'https://www.gravatar.com/avatar/' + md5(this.email) + '?d=wavatar&s=150'
         } else return defaultAvatar
       },
-      pending () {
+      pending() {
         return this.$store.state.ui.pending
       }
     },
     methods: {
-      validate () {
+      validate() {
         if (!this.password) {
           this.isValid.password = false
           this.isValid.passwordHelper = 'Sandi harus diisi!'
@@ -87,7 +87,7 @@
           this.isValid.confirmationHelper = ''
         }
       },
-      onSubmit () {
+      onSubmit() {
         this.validate()
         if (this.isValid.password && this.isValid.confirmation) {
           BaseService.doRequest({

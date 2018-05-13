@@ -42,17 +42,17 @@
       sent: false
     }),
     computed: {
-      avatar () {
+      avatar() {
         if (/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.email)) {
           return 'https://www.gravatar.com/avatar/' + md5(this.email) + '?d=wavatar&s=150'
         } else return defaultAvatar
       },
-      pending () {
+      pending() {
         return this.$store.state.ui.pending
       }
     },
     methods: {
-      onSubmit () {
+      onSubmit() {
         BaseService.doRequest({
           url: 'reset_password',
           method: 'POST',

@@ -13,7 +13,7 @@ export default {
   components: {
     NprogressContainer
   },
-  created () {
+  created() {
     this.$store.dispatch('resetUi')
   }
 }

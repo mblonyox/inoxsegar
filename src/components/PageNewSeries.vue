@@ -1,6 +1,6 @@
 <template>
-  <section id="new-movie" class="container">
-    <h1 class="title">Tambah Movie</h1>
+  <section id="new-series" class="container">
+    <h1 class="title">Tambah Series</h1>
     <form @submit.prevent="onSubmit">
       <div class="box">
         <div class="columns">
@@ -226,14 +226,14 @@
           votes: this.votes
         }
         WithToken.doRequest({
-          url: 'movie',
+          url: 'series',
           method: 'POST',
           body: data
         })
           .then(state => state.result.body)
           .then(body => {
             if (body.success) {
-              this.$router.push('/movie')
+              this.$router.push('/series')
             }
           })
       }
@@ -242,7 +242,7 @@
 </script>
 
 <style>
-  #new-movie {
+  #new-series {
     margin-top: 3rem;
   }
 </style>

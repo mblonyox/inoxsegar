@@ -1,7 +1,7 @@
 <template>
-  <section id="movies" class="container">
-    <h1 class="title">Koleksi Movies
-      <router-link class="button is-success" to="/movie/new" v-if="isAdmin">
+  <section id="series" class="container">
+    <h1 class="title">Koleksi Serial
+      <router-link class="button is-success" to="/series/new" v-if="isAdmin">
         <span class="icon">
           <i class="fa fa-plus"></i>
         </span>
@@ -40,12 +40,12 @@
     </div>
     <div class="box">
       <div class="columns is-multiline">
-        <div class="column is-one-quarter" v-for="movie in movies">
-          <router-link :to="{name: 'PageMovie', params: {id: movie._id}}">
+        <div class="column is-one-quarter" v-for="set in series">
+          <router-link :to="{name: 'PageSeries', params: {id: set._id}}">
             <div class="card">
               <div class="card-image">
                 <figure class="image">
-                  <img :src="movie.poster">
+                  <img :src="set.poster">
                 </figure>
               </div>
             </div>
@@ -64,7 +64,7 @@ import { NoNotify } from '../helpers/api-service'
 export default {
   data() {
     return {
-      movies: [],
+      series: [],
       page: 0
     }
   },
@@ -77,7 +77,7 @@ export default {
     infiniteHandler($state) {
       this.page++
       NoNotify.doRequest({
-        url: 'movie',
+        url: 'series',
         query: {
           page: this.page
         }
@@ -85,9 +85,9 @@ export default {
         .then(({result}) => result.body)
         .then(body => {
           if (body.success) {
-            this.movies = this.movies.concat(body.data.movies)
+            this.series = this.series.concat(body.data.series)
             $state.loaded()
-            if (body.data.movies.length < 20) {
+            if (body.data.series.length < 20) {
               $state.complete()
             }
           }
@@ -101,7 +101,7 @@ export default {
 </script>
 
 <style>
-  #movies {
+  #series {
     margin-top: 3rem;
   }
 </style>

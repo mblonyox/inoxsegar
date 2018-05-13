@@ -117,24 +117,24 @@ export default {
     expand: false
   }),
   computed: {
-    userId () {
+    userId() {
       return this.$store.state.auth.user.id
     },
-    getToken () {
+    getToken() {
       return this.$store.state.auth.token
     },
-    isLiked () {
+    isLiked() {
       return this.file.metadata.likes.includes(this.userId)
     },
-    isDisliked () {
+    isDisliked() {
       return this.file.metadata.dislike.includes(this.userId)
     }
   },
   methods: {
-    humanFilesize (bytes) {
+    humanFilesize(bytes) {
       return filesize(bytes)
     },
-    toggleLike () {
+    toggleLike() {
       NoNotify.doRequest({
         url: 'file/' + this.file._id + '/like',
         method: 'POST',
@@ -148,7 +148,7 @@ export default {
           if (body.success) this.updateFile(body.data.file)
         })
     },
-    toggleDislike () {
+    toggleDislike() {
       NoNotify.doRequest({
         url: 'file/' + this.file._id + '/like',
         method: 'POST',
@@ -162,11 +162,11 @@ export default {
           if (body.success) this.updateFile(body.data.file)
         })
     },
-    updateFile (newFile) {
+    updateFile(newFile) {
       this.$emit('updateFile', newFile)
     }
   },
-  mounted () {
+  mounted() {
     if (this.expandDefault) this.expand = true
   },
   props: ['file', 'hideKoleksi', 'expandDefault']

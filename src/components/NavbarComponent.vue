@@ -74,26 +74,26 @@
 
   export default {
     computed: {
-      avatar () {
+      avatar() {
         if (/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.email)) {
           return 'https://www.gravatar.com/avatar/' + md5(this.email) + '?d=wavatar&s=150'
         } else return defaultAvatar
       },
-      userId () {
+      userId() {
         return this.$store.state.auth.user.id
       },
-      username () {
+      username() {
         return this.$store.state.auth.user.username
       },
-      email () {
+      email() {
         return this.$store.state.auth.user.email
       },
-      isAdmin () {
+      isAdmin() {
         return this.$store.state.auth.user.admin
       }
     },
     methods: {
-      doSignOut () {
+      doSignOut() {
         this.$store.dispatch('signOut')
       }
     }

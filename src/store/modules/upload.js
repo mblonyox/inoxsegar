@@ -10,25 +10,25 @@ const state = {
 }
 
 const mutations = {
-  addUploadQueue (state, newFile) {
+  addUploadQueue(state, newFile) {
     state.queue.push(newFile)
   },
-  removeUploadQueue (state, item) {
+  removeUploadQueue(state, item) {
     state.queue.splice(state.queue.indexOf(item), 1)
   },
-  setQueueProgress (state, progress) {
+  setQueueProgress(state, progress) {
     state.queue[progress.index].progress = progress.value
   },
-  setQueueStatus (state, status) {
+  setQueueStatus(state, status) {
     state.queue[status.index].status = status.value
   },
-  setQueueError (state, error) {
+  setQueueError(state, error) {
     state.queue[error.index].error = error.value
   }
 }
 
 const actions = {
-  addUpload ({state, commit, rootState, dispatch}, file) {
+  addUpload({state, commit, rootState, dispatch}, file) {
     const name = file.name
     const upload = new tus.Upload(file, {
       endpoint: uploadEndpoint,
@@ -56,7 +56,7 @@ const actions = {
       error: null
     }
 
-    function onErrorCallback (error) {
+    function onErrorCallback(error) {
       const index = state.queue.indexOf(queue)
       commit('setQueueStatus', {index, value: 'paused'})
       commit('setQueueError', {index, value: error})
@@ -72,42 +72,42 @@ const actions = {
       }
     }
 
-    function onProgressCallback (bytesUploaded, bytesTotal) {
+    function onProgressCallback(bytesUploaded, bytesTotal) {
       commit('setQueueProgress', {index: state.queue.indexOf(queue), value: (bytesUploaded / bytesTotal * 100).toFixed(2)})
     }
 
-    function onSuccessCallback () {
+    function onSuccessCallback() {
       commit('setQueueStatus', {index: state.queue.indexOf(queue), value: 'completed'})
       dispatch('notifySuccess', 'Unggah berhasil atas file: "' + name + '".')
     }
 
     commit('addUploadQueue', queue)
   },
-  clearEmptyFileQueue ({state, commit}) {
+  clearEmptyFileQueue({state, commit}) {
     for (let index = state.queue.length - 1; index >= 0; index--) {
       const queue = state.queue[index]
       if (queue.upload === undefined || queue.upload.file === undefined || queue.upload.file.name === undefined) commit('removeUploadQueue', queue)
     }
   },
-  startUploadSingle ({state, commit, rootState}, queue) {
+  startUploadSingle({state, commit, rootState}, queue) {
     if (queue && queue.status === 'paused') {
       queue.upload.options.headers['x-access-token'] = rootState.auth.token
       queue.upload.start()
       commit('setQueueStatus', {index: state.queue.indexOf(queue), value: 'started'})
     }
   },
-  pauseUploadSingle ({state, commit, rootState}, queue) {
+  pauseUploadSingle({state, commit, rootState}, queue) {
     if (queue && queue.status === 'started') {
       queue.upload.abort()
       commit('setQueueStatus', {index: state.queue.indexOf(queue), value: 'paused'})
     }
   },
-  startUploadAll ({state, dispatch}) {
+  startUploadAll({state, dispatch}) {
     state.queue.forEach(queue => {
       dispatch('startUploadSingle', queue)
     })
   },
-  pauseUploadAll ({state, dispatch}) {
+  pauseUploadAll({state, dispatch}) {
     state.queue.forEach(queue => {
       dispatch('pauseUploadSingle', queue)
     })

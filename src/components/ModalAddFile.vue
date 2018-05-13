@@ -43,7 +43,7 @@ import filesize from 'filesize'
 import { NoNotify } from '../helpers/api-service'
 
 export default {
-  data () {
+  data() {
     return {
       files: [],
       selected: null
@@ -51,19 +51,19 @@ export default {
   },
   props: ['active'],
   methods: {
-    close () {
+    close() {
       this.$emit('update:active', false)
     },
-    humanFilesize (bytes) {
+    humanFilesize(bytes) {
       return filesize(bytes)
     },
-    onSubmit () {
+    onSubmit() {
       this.$emit('submit', this.selected)
       this.selected = null
       this.close()
     }
   },
-  mounted () {
+  mounted() {
     NoNotify.doRequest({
       url: 'file',
       query: {
