@@ -40,12 +40,15 @@
     </div>
     <div class="box">
       <div class="columns is-multiline">
-        <div class="column is-one-quarter" v-for="movie in movies">
+        <div class="column is-one-quarter" v-for="movie in movies" :key="movie._id">
           <router-link :to="{name: 'PageMovie', params: {id: movie._id}}">
             <div class="card">
               <div class="card-image">
                 <figure class="image">
-                  <img :src="movie.poster">
+                  <v-lazy-image 
+                    :src="movie.poster"
+                    :src-placeholder="noPoster"
+                  />
                 </figure>
               </div>
             </div>
@@ -60,6 +63,8 @@
 <script>
 import InfiniteLoading from 'vue-infinite-loading'
 import { NoNotify } from '../helpers/api-service'
+import noPoster from '../assets/no-poster.jpg'
+import VLazyImage from 'v-lazy-image'
 
 export default {
   data() {
@@ -71,6 +76,9 @@ export default {
   computed: {
     isAdmin() {
       return this.$store.state.auth.user.admin
+    },
+    noPoster() {
+      return noPoster
     }
   },
   methods: {
@@ -95,7 +103,8 @@ export default {
     }
   },
   components: {
-    InfiniteLoading
+    InfiniteLoading,
+    VLazyImage
   }
 }
 </script>
@@ -103,5 +112,14 @@ export default {
 <style>
   #movies {
     margin-top: 3rem;
+  }
+
+  .v-lazy-image {
+    filter: blur(5px);
+    transition: filter 0.5s;
+    transition-timing-function: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  }
+  .v-lazy-image-loaded {
+    filter: blur(0px);
   }
 </style>
