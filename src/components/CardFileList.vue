@@ -11,100 +11,102 @@
         </span>
       </a>
     </header>
-    <div class="card-content" v-show="expand">
-      <table class="table is-striped is-fullwidth">
-        <tbody>
-          <tr>
-            <td>Nama File</td>
-            <td>:</td>
-            <td>{{ file.name }}</td>
-          </tr>
-          <tr>
-            <td>Ukuran File</td>
-            <td>:</td>
-            <td>{{ humanFilesize(file.size) }}</td>
-          </tr>
-          <tr>
-            <td>Pengunggah</td>
-            <td>:</td>
-            <td>
-              <router-link 
-                :to="{name: 'PageUser', params: {id: file.uploader._id }}" 
-                v-if="file.uploader">
-                {{ file.uploader.username }}
-              </router-link>
-            </td>
-          </tr>
-          <tr>
-            <td>Waktu Unggah</td>
-            <td>:</td>
-            <td>{{ (new Date(file.date)).toLocaleString('id-ID') }}</td>
-          </tr>
-          <tr v-if="!hideKoleksi">
-            <td>Koleksi</td>
-            <td>:</td>
-            <td>
-              <router-link 
-                :to="file.koleksi.tipe + '/' + file.koleksi.data._id"
-                v-if="file.koleksi && file.koleksi.data"
-                >
-                {{file.koleksi.data.title}} ({{file.koleksi.data.year}})
-              </router-link>
-              <span v-else>Non-koleksi</span>
-            </td>
-          </tr>
-          <tr>
-            <td>Suka</td>
-            <td>:</td>
-            <td>
-              {{ file.metadata.likes.length }} <i class="fa fa-thumbs-o-up"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>Tidak Suka</td>
-            <td>:</td>
-            <td>
-              {{ file.metadata.dislike.length }} <i class="fa fa-thumbs-o-down"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>Diunduh</td>
-            <td>:</td>
-            <td>
-              {{ file.metadata.downloads.length }} <i class="fa fa-download"></i>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <button 
-        class="button"
-        @click="toggleLike"
-        :class="{'is-success': isLiked}"
-        v-if="isLiked || !isDisliked"
-      >
-        <span>
-          <i class="fa fa-thumbs-up"></i>
-          {{ isLiked ? 'Batal Suka' : 'Suka' }}
-        </span>
-      </button>
-      <button 
-        class="button" 
-        @click="toggleDislike" 
-        :class="{'is-danger': isDisliked}"
-        v-if="isDisliked || !isLiked"
-      >
-        <span>
-          <i class="fa fa-thumbs-down"></i>
-          {{ isDisliked ? 'Batal Tidak Suka' : 'Tidak Suka' }}
-        </span>
-      </button>
-      <a :href="`/api/download/${file._id}?token=${getToken}`" class="button is-primary">
-        <span>
-          <i class="fa fa-download"></i>
-          Unduh
-        </span>
-      </a>
-    </div>
+    <transition name="slide-down">
+      <div class="card-content" v-show="expand">
+        <table class="table is-striped is-fullwidth">
+          <tbody>
+            <tr>
+              <td>Nama File</td>
+              <td>:</td>
+              <td>{{ file.name }}</td>
+            </tr>
+            <tr>
+              <td>Ukuran File</td>
+              <td>:</td>
+              <td>{{ humanFilesize(file.size) }}</td>
+            </tr>
+            <tr>
+              <td>Pengunggah</td>
+              <td>:</td>
+              <td>
+                <router-link 
+                  :to="{name: 'PageUser', params: {id: file.uploader._id }}" 
+                  v-if="file.uploader">
+                  {{ file.uploader.username }}
+                </router-link>
+              </td>
+            </tr>
+            <tr>
+              <td>Waktu Unggah</td>
+              <td>:</td>
+              <td>{{ (new Date(file.date)).toLocaleString('id-ID') }}</td>
+            </tr>
+            <tr v-if="!hideKoleksi">
+              <td>Koleksi</td>
+              <td>:</td>
+              <td>
+                <router-link 
+                  :to="file.koleksi.tipe + '/' + file.koleksi.data._id"
+                  v-if="file.koleksi && file.koleksi.data"
+                  >
+                  {{file.koleksi.data.title}} ({{file.koleksi.data.year}})
+                </router-link>
+                <span v-else>Non-koleksi</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Suka</td>
+              <td>:</td>
+              <td>
+                {{ file.metadata.likes.length }} <i class="fa fa-thumbs-o-up"></i>
+              </td>
+            </tr>
+            <tr>
+              <td>Tidak Suka</td>
+              <td>:</td>
+              <td>
+                {{ file.metadata.dislike.length }} <i class="fa fa-thumbs-o-down"></i>
+              </td>
+            </tr>
+            <tr>
+              <td>Diunduh</td>
+              <td>:</td>
+              <td>
+                {{ file.metadata.downloads.length }} <i class="fa fa-download"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button 
+          class="button"
+          @click="toggleLike"
+          :class="{'is-success': isLiked}"
+          v-if="isLiked || !isDisliked"
+        >
+          <span>
+            <i class="fa fa-thumbs-up"></i>
+            {{ isLiked ? 'Batal Suka' : 'Suka' }}
+          </span>
+        </button>
+        <button 
+          class="button" 
+          @click="toggleDislike" 
+          :class="{'is-danger': isDisliked}"
+          v-if="isDisliked || !isLiked"
+        >
+          <span>
+            <i class="fa fa-thumbs-down"></i>
+            {{ isDisliked ? 'Batal Tidak Suka' : 'Tidak Suka' }}
+          </span>
+        </button>
+        <a :href="`/api/download/${file._id}?token=${getToken}`" class="button is-primary">
+          <span>
+            <i class="fa fa-download"></i>
+            Unduh
+          </span>
+        </a>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -172,3 +174,24 @@ export default {
   props: ['file', 'hideKoleksi', 'expandDefault']
 }
 </script>
+
+<style scoped>
+header.card-header {
+  cursor: pointer;
+}
+
+div.card-content {
+  overflow: hidden;
+}
+
+.slide-down-enter-active, .slide-down-leave-active {
+  transition: max-height 0.5s ease-in;
+}
+.slide-down-enter, .slide-down-leave-to {
+  max-height: 0px;
+}
+.slide-down-enter-to, .slide-down-leave {
+  max-height: 500px;
+}
+</style>
+
