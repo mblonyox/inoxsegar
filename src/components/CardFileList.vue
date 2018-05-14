@@ -184,8 +184,11 @@ div.card-content {
   overflow: hidden;
 }
 
-.slide-down-enter-active, .slide-down-leave-active {
+.slide-down-leave-active {
   transition: max-height 0.5s ease-in;
+}
+.slide-down-enter-active {
+  transition: max-height 0.5s ease-out;
 }
 .slide-down-enter, .slide-down-leave-to {
   max-height: 0px;
