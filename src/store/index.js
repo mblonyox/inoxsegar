@@ -6,6 +6,7 @@ import createPersistedState from 'vuex-persistedstate'
 import auth from './modules/auth'
 import upload from './modules/upload'
 import ui from './modules/ui'
+import metadata from './modules/metadata'
 
 Vue.use(Vuex)
 
@@ -13,7 +14,8 @@ const store = new Vuex.Store({
   modules: {
     auth,
     upload,
-    ui
+    ui,
+    metadata
   },
   plugins: [createPersistedState({
     key: 'v-0.0.1'
