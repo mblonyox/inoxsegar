@@ -5,6 +5,7 @@
       <div class="box">
         <div class="columns">
           <div class="column is-9">
+
             <div class="field is-horizontal">
               <div class="field-label">
                 <label for="imdb-id" class="label">IMDB</label>
@@ -15,6 +16,7 @@
                 </div>
               </div>
             </div>
+
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label for="movie-title" class="label">Judul</label>
@@ -25,16 +27,40 @@
                 </div>
               </div>
             </div>
+
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label for="movie-year" class="label">Tahun</label>
               </div>
               <div class="field-body">
-                <div class="field is-narrow">
+                <div class="field">
                   <input type="text" class="input" v-model="year">
                 </div>
               </div>
             </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label">
+                <label for="released" class="label">Tanggal Rilis</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <input type="text" class="input" v-model="released">
+                </div>
+              </div>
+            </div>
+          
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label for="runtime" class="label">Durasi Tayang</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <input type="text" class="input" v-model="runtime">
+                </div>
+              </div>
+            </div>
+
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label for="movie-genre" class="label">Genre</label>
@@ -45,6 +71,7 @@
                 </div>
               </div>
             </div>
+
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label for="movie-country" class="label">Negara</label>
@@ -65,6 +92,7 @@
                 </div>
               </div>
             </div>
+
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label for="movie-director" class="label">Sutradara</label>
@@ -75,6 +103,7 @@
                 </div>
               </div>
             </div>
+
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label for="movie-writer" class="label">Penulis</label>
@@ -85,6 +114,7 @@
                 </div>
               </div>
             </div>
+
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label for="movie-synopsis" class="label">Sinopsis</label>
@@ -95,6 +125,7 @@
                 </div>
               </div>
             </div>
+
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label for="movie-cast" class="label">Pemeran</label>
@@ -105,6 +136,7 @@
                 </div>
               </div>
             </div>
+
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label for="movie-poster" class="label">Poster</label>
@@ -115,6 +147,7 @@
                 </div>
               </div>
             </div>
+
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label for="movie-rating" class="label">Rating</label>
@@ -135,6 +168,7 @@
                 </div>
               </div>
             </div>
+
           </div>
           <div class="column is-3">
             <figure class="image">
@@ -166,6 +200,8 @@
         imdb: null,
         title: null,
         year: null,
+        released: null,
+        runtime: null,
         genre: null,
         country: null,
         language: null,
@@ -190,6 +226,8 @@
           .then(data => {
             this.title = data.Title
             this.year = data.Year
+            this.released = data.Released
+            this.runtime = data.Runtime
             this.genre = data.Genre
             this.country = data.Country
             this.language = data.Language
@@ -214,6 +252,8 @@
           imdb: this.imdb,
           title: this.title,
           year: this.year,
+          released: this.released,
+          runtime: this.runtime,
           genre: this.genre,
           country: this.country,
           language: this.language,
