@@ -8,7 +8,7 @@
             <table class="table is-striped">
               <tbody>
                 <template v-for="detail in details">
-                  <tr>
+                  <tr :key="detail.valuet">
                     <td>{{ detail.text }}</td>
                     <td>:</td>
                     <td>{{ Array.isArray(movie[detail.value]) ? movie[detail.value].join(', ') : movie[detail.value] }}</td>
@@ -16,6 +16,21 @@
                 </template>
               </tbody>
             </table>
+            <div class="is-flex" style="align-items: center; justify-content: center;">
+              <star-rating
+                :star-size="32"
+                :max-rating="10"
+                :increment="0.1"
+                :fixed-points="1"
+                :rating="movie.imdbRating"
+                :read-only="true"
+                :border-width="1"
+                :rounded-corners="true"
+              />
+              <div style="padding-left: 20px;">
+                ({{movie.imdbVotes}} votes)
+              </div>
+            </div>
           </div>
         </div>
         <div class="tile is-4">
@@ -54,6 +69,7 @@
 </template>
 
 <script>
+import StarRating from 'vue-star-rating'
 import CardFileList from './CardFileList'
 import { WithToken, NoNotify } from '../helpers/api-service'
 import ModalAddFile from './ModalAddFile'
@@ -65,6 +81,8 @@ export default {
       details: [
         {text: 'Judul', value: 'title'},
         {text: 'Tahun', value: 'year'},
+        {text: 'Rilis', value: 'released'},
+        {text: 'Durasi', value: 'runtime'},
         {text: 'Genre', value: 'genre'},
         {text: 'Negara', value: 'country'},
         {text: 'Bahasa', value: 'language'},
@@ -84,7 +102,8 @@ export default {
   props: ['id'],
   components: {
     ModalAddFile,
-    CardFileList
+    CardFileList,
+    StarRating
   },
   methods: {
     handleUpdateFile(newFile) {
