@@ -63,7 +63,8 @@ const router = new Router({
         {
           path: 'series/:id',
           name: 'PageSeries',
-          component: PageSeries
+          component: PageSeries,
+          props: true
         },
         {
           path: 'upload',
