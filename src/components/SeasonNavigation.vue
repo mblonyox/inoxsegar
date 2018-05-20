@@ -50,7 +50,12 @@
             <tr v-for="(file, index) in episodeActive.files" :key="file._id">
               <td>{{ index + 1 }}</td>
               <td>
-                <card-file-list :file="file" :hideKoleksi="true" :expandDefault="true" />
+                <card-file-list 
+                  :file="file" 
+                  :hideKoleksi="true" 
+                  :expandDefault="true"
+                  @updateFile="handleUpdateFile(index, $event)"
+                />
               </td>
             </tr>
           </tbody>
@@ -187,6 +192,14 @@
               this.updateSeries(updatedSeries)
             }
           })
+      },
+      handleUpdateFile(index, newFile) {
+        const updatedSeries = {...this.series}
+        updatedSeries
+          .seasons[this.seasonSelected]
+          .episodes[this.episodeSelected]
+          .files[index] = newFile
+        this.updateSeries(updatedSeries)
       },
       updateSeries(series) {
         this.$emit('update:series', series)
