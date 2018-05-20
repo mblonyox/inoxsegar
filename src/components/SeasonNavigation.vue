@@ -6,7 +6,7 @@
         <button
           class="button is-fullwidth item"
           :class="{'is-active': index === seasonSelected}"
-          v-for="(season, index) in seasons"
+          v-for="(season, index) in series.seasons"
           @click="seasonSelected = index; episodeSelected = 0"
         >
           {{season.name}}
@@ -48,25 +48,32 @@
           </thead>
           <tbody>
             <tr v-for="(file, index) in episodeActive.files" :key="file._id">
-              <td>{{ index }}</td>
+              <td>{{ index + 1 }}</td>
               <td>
                 <card-file-list :file="file" :hideKoleksi="true" :expandDefault="true" />
               </td>
             </tr>
           </tbody>
         </table>
-        <button class="button is-fullwidth item" v-if="isAdmin">+</button>
+        <button
+          class="button is-fullwidth item"
+          v-if="isAdmin"
+          @click="modal = true"
+        >+</button>
       </div>
     </div>
+    <modal-add-file :active.sync="modal" @submit="onAddFileSubmit" v-if="isAdmin" />
   </div>
 </template>
 
 <script>
-  import { NoNotify } from '../helpers/api-service'
+  import { NoNotify, WithToken } from '../helpers/api-service'
   import CardFileList from './CardFileList'
+  import ModalAddFile from './ModalAddFile'
 
   export default {
     data: () => ({
+      modal: false,
       seasonSelected: 0,
       episodeSelected: 0
     }),
@@ -75,16 +82,17 @@
         return this.$store.state.auth.user.admin
       },
       seasonActive() {
-        return this.seasons ? this.seasons[this.seasonSelected] : {}
+        return this.series.seasons ? this.series.seasons[this.seasonSelected] : {}
       },
       episodeActive() {
         return this.seasonActive.episodes ? this.seasonActive.episodes[this.episodeSelected] : {}
       }
     },
     components: {
-      CardFileList
+      CardFileList,
+      ModalAddFile
     },
-    props: ['seasons', 'seriesId'],
+    props: ['series'],
     methods: {
       addNewSeason() {
         this.$swal({
@@ -97,7 +105,7 @@
                 </div>
                 <div class='field-body'>
                   <div class='field'>
-                    <input class='input' type='text' id='add-season-number' value='${this.seasons.length + 1}'>
+                    <input class='input' type='text' id='add-season-number' value='${this.series.seasons.length + 1}'>
                   </div>
                 </div>
               </div>
@@ -107,7 +115,7 @@
                 </div>
                 <div class='field-body'>
                   <div class='field'>
-                    <input class='input' type='text' id='add-season-name' value='Season  ${this.seasons.length + 1}'>
+                    <input class='input' type='text' id='add-season-name' value='Season  ${this.series.seasons.length + 1}'>
                   </div>
                 </div>
               </div>
@@ -137,7 +145,7 @@
               onOpen: () => {
                 this.$swal.showLoading()
                 NoNotify.doRequest({
-                  url: 'series/' + this.seriesId + '/seasons',
+                  url: 'series/' + this.series._id + '/seasons',
                   method: 'POST',
                   body: form.value
                 })
@@ -152,8 +160,36 @@
             })
           })
       },
+      onAddFileSubmit(fileId) {
+        const seriesId = this.series._id
+        const seasonId = this.seasonActive._id
+        const episodeId = this.episodeActive._id
+
+        WithToken.doRequest({
+          url: 'series/:seriesId/seasons/:seasonId/episodes/:episodeId',
+          method: 'POST',
+          params: {
+            seriesId,
+            seasonId,
+            episodeId
+          },
+          body: {fileId}
+        })
+          .then(state => state.result.body)
+          .then(body => {
+            if (body.success) {
+              const updatedSeries = {...this.series}
+              updatedSeries
+                .seasons[this.seasonSelected]
+                .episodes[this.episodeSelected]
+                .files
+                .push(body.data.file)
+              this.updateSeries(updatedSeries)
+            }
+          })
+      },
       updateSeries(series) {
-        this.$emit('update', series)
+        this.$emit('update:series', series)
       }
     }
   }

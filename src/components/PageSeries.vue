@@ -35,7 +35,7 @@
       </div>
       <div class="tile box">
         <div class="tile is-child">
-          <season-navigation :seasons="series.seasons" :seriesId="series._id" @update="handleUpdateSeries"/>
+          <season-navigation :series.sync="series"/>
         </div>
       </div>
     </div>
@@ -70,11 +70,6 @@
       CardFileList,
       SeasonNavigation,
       StarRating
-    },
-    methods: {
-      handleUpdateSeries(series) {
-        this.series = series
-      }
     },
     mounted() {
       NoNotify.doRequest({
