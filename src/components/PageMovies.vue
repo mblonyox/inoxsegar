@@ -13,10 +13,10 @@
         <div class="level-item">
           <div class="field has-addons">
             <p class="control">
-              <input type="text" class="input" placeholder="Cari...">
+              <input type="text" class="input" v-model="searchInput" @keyup.enter="goSearch" placeholder="Cari...">
             </p>
             <p class="control">
-              <button class="button">
+              <button class="button" @click="goSearch">
                 Cari
               </button>
             </p>
@@ -55,7 +55,7 @@
           </router-link>
         </div>
       </div>
-      <infinite-loading @infinite="infiniteHandler" />
+      <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading"/>
     </div>
   </section>
 </template>
@@ -70,6 +70,7 @@ export default {
   data() {
     return {
       movies: [],
+      searchInput: '',
       page: 0
     }
   },
@@ -87,6 +88,7 @@ export default {
       NoNotify.doRequest({
         url: 'movie',
         query: {
+          search: this.$route.query.search || '',
           page: this.page
         }
       })
@@ -100,7 +102,18 @@ export default {
             }
           }
         })
+    },
+    goSearch() {
+      this.$router.push({name: 'PageMovies', query: {search: this.searchInput}})
     }
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.movies = []
+    this.page = 0
+    this.$nextTick(() => {
+      this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset')
+      next()
+    })
   },
   components: {
     InfiniteLoading,
