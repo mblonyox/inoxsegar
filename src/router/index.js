@@ -38,42 +38,50 @@ const router = new Router({
         {
           path: '',
           name: 'PageHome',
+          meta: { title: 'Beranda' },
           component: PageHome
         },
         {
           path: 'movie',
           name: 'PageMovies',
+          meta: { title: 'Movies' },
           component: PageMovies
         },
         {
           path: 'movie/new',
           name: 'PageNewMovie',
+          meta: { title: 'Tambah Movie' },
           component: PageNewMovie
         },
         {
           path: 'series',
           name: 'PageSeriesIndex',
+          meta: { title: 'Series' },
           component: PageSeriesIndex
         },
         {
           path: 'series/new',
           name: 'PageNewSeries',
+          meta: { title: 'Tambah Series' },
           component: PageNewSeries
         },
         {
           path: 'series/:id',
           name: 'PageSeries',
+          meta: { title: 'Series:' },
           component: PageSeries,
           props: true
         },
         {
           path: 'upload',
           name: 'PageUpload',
+          meta: { title: 'Unggah' },
           component: PageUpload
         },
         {
           path: 'files',
           name: 'PageFiles',
+          meta: { title: 'Files' },
           component: PageFiles
         },
         {
@@ -84,17 +92,20 @@ const router = new Router({
         {
           path: 'movie/:id',
           name: 'PageMovie',
+          meta: { title: 'Movie:' },
           component: PageMovie,
           props: true
         },
         {
           path: 'forum',
           name: 'PageForumIndex',
+          meta: { title: 'Forum' },
           component: PageForumIndex
         },
         {
           path: 'stats',
           name: 'PageStats',
+          meta: { title: 'Stats' },
           component: PageStats
         }
       ]
@@ -105,27 +116,27 @@ const router = new Router({
       children: [
         {
           path: 'sign-in',
-          meta: { authenticated: false },
+          meta: { authenticated: false, title: 'Masuk' },
           component: PageSignIn
         },
         {
           path: 'sign-up',
-          meta: { authenticated: false },
+          meta: { authenticated: false, title: 'Daftar' },
           component: PageSignUp
         },
         {
           path: 'activate-account',
-          meta: { authenticated: true },
+          meta: { authenticated: true, title: 'Aktivasi' },
           component: PageActivateAccount
         },
         {
           path: 'reset-password',
-          meta: { authenticated: false },
+          meta: { authenticated: false, title: 'Atur Ulang Sandi' },
           component: PageResetPassword
         },
         {
           path: 'change-password',
-          meta: { authenticated: false },
+          meta: { authenticated: false, title: 'Ganti Sandi' },
           component: PageChangePassword
         }
       ]
@@ -144,6 +155,14 @@ router.beforeEach((to, from, next) => {
     } else next({path: '/sign-in', query: {redirect: to.fullPath}})
   } else if (to.matched.some(route => route.meta.authenticated === false) && store.state.auth.loggedIn) next({path: '/'})
   else next()
+})
+
+router.afterEach((to, from) => {
+  if (to.meta.title) {
+    window.document.title = `InoxSegar - ${to.meta.title}`
+  } else {
+    window.document.title = `InoxSegar`
+  }
 })
 
 export default router

@@ -106,6 +106,18 @@ export default {
     StarRating
   },
   methods: {
+    fetchData() {
+      NoNotify.doRequest({
+        url: 'movie/' + this.id
+      })
+        .then(state => state.result.body)
+        .then(body => {
+          if (body.success) {
+            this.movie = body.data.movie
+            window.document.title += ` ${this.movie.title} (${this.movie.year})`
+          }
+        })
+    },
     handleUpdateFile(newFile) {
       let index = this.movie.files.findIndex(files => files._id === newFile._id)
       this.movie.files.splice(index, 1, newFile)
@@ -128,16 +140,8 @@ export default {
         })
     }
   },
-  mounted() {
-    NoNotify.doRequest({
-      url: 'movie/' + this.id
-    })
-      .then(state => state.result.body)
-      .then(body => {
-        if (body.success) {
-          this.movie = body.data.movie
-        }
-      })
+  created() {
+    this.fetchData()
   }
 }
 </script>
