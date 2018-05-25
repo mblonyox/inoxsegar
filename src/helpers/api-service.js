@@ -2,10 +2,9 @@ import { ApiService } from '@apicase/core'
 import fetch from '@apicase/adapter-fetch'
 
 import store from '../store'
-import serverUrl from './backend-url'
 import vm from '../main'
 
-const baseUrl = serverUrl + 'api'
+const baseUrl = '/api'
 
 export const BaseService = new ApiService({adapter: fetch,
   url: baseUrl,

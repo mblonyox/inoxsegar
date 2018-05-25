@@ -1,8 +1,7 @@
 import tus from 'tus-js-client'
-import serverUrl from '../../helpers/backend-url'
 import { RefreshToken } from '../../helpers/api-service'
 
-const uploadEndpoint = serverUrl + 'api/upload'
+const uploadEndpoint = '/api/upload'
 
 const state = {
   queue: [],
