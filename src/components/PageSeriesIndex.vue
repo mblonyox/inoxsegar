@@ -25,6 +25,9 @@
       </div>
       <div class="level-right">
         <div class="level-item">
+          <subscribe-button topic="series" />
+        </div>
+        <div class="level-item">
           <div class="select">
             <select>
               <option value="">Urutkan</option>
@@ -60,6 +63,7 @@
 <script>
 import InfiniteLoading from 'vue-infinite-loading'
 import { NoNotify } from '../helpers/api-service'
+import SubscribeButton from './SubscribeButton'
 
 export default {
   data() {
@@ -95,7 +99,8 @@ export default {
     }
   },
   components: {
-    InfiniteLoading
+    InfiniteLoading,
+    SubscribeButton
   }
 }
 </script>

@@ -2,7 +2,14 @@ import vm from '../../main'
 
 const state = {
   notifications: [],
-  pending: false
+  pending: false,
+  subscriptions: []
+}
+
+const getters = {
+  isSubscribed: (state) => (topic) => {
+    return state.subscriptions.includes(topic)
+  }
 }
 
 const mutations = {
@@ -10,13 +17,22 @@ const mutations = {
     state.notifications.push(notification)
   },
   removeNotification(state, notification) {
-    state.notifications.splice(state.notifications.findIndex(notification), 1)
+    state.notifications.splice(state.notifications.indexOf(notification), 1)
   },
   clearNotification(state) {
     state.notification = []
   },
   setPending(state, isPending) {
     state.pending = !!isPending
+  },
+  setSubscription(state, subscriptions) {
+    state.subscriptions = subscriptions
+  },
+  pushSubscription(state, topic) {
+    state.subscriptions.push(topic)
+  },
+  removeSubscription(state, topic) {
+    state.subscriptions.splice(state.subscriptions.indexOf(topic), 1)
   }
 }
 
@@ -77,6 +93,7 @@ const actions = {
 
 export default {
   state,
+  getters,
   mutations,
   actions
 }

@@ -25,6 +25,9 @@
       </div>
       <div class="level-right">
         <div class="level-item">
+          <subscribe-button topic="movie" />
+        </div>
+        <div class="level-item">
           <div class="select">
             <select>
               <option value="">Urutkan</option>
@@ -65,6 +68,7 @@ import InfiniteLoading from 'vue-infinite-loading'
 import { NoNotify } from '../helpers/api-service'
 import noPoster from '../assets/no-poster.jpg'
 import VLazyImage from 'v-lazy-image'
+import SubscribeButton from './SubscribeButton'
 
 export default {
   data() {
@@ -117,7 +121,8 @@ export default {
   },
   components: {
     InfiniteLoading,
-    VLazyImage
+    VLazyImage,
+    SubscribeButton
   }
 }
 </script>

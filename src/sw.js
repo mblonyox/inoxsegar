@@ -4,5 +4,5 @@ self.addEventListener('push', e => {
   //   icon: '/static/img/icons/favicon-96x96.png',
   //   vibrate: [500,200,300]
   // }
-  e.waitUntil(console.log(e))
+  console.log(e)
 })

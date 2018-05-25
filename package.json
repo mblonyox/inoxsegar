@@ -14,6 +14,7 @@
     "@apicase/adapter-fetch": "^0.12.0",
     "@apicase/core": "^0.13.1",
     "bulma": "^0.6.1",
+    "bulma-extensions": "^1.0.30",
     "filesize": "^3.5.11",
     "font-awesome": "^4.7.0",
     "md5": "^2.2.1",

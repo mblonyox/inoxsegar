@@ -2,6 +2,11 @@
   <section id="files" class="container">
     <h1 class="title">File yang diunggah.</h1>
     <h2 class="subtitle">Menampilkan file-file yang diunggah oleh semua pengguna. File yang telah dimasukkan dalam koleksi juga dapat diakses dari laman koleksi tersebut.</h2>
+    <div class="level-right">
+      <div class="level-item">
+        <subscribe-button topic="file" />
+      </div>
+    </div>
     <hr>
     <div class="box">
       <table class="table is-fullwidth">
@@ -31,6 +36,7 @@
 
 <script>
 import CardFileList from './CardFileList'
+import SubscribeButton from './SubscribeButton'
 import InfiniteLoading from 'vue-infinite-loading'
 import { NoNotify } from '../helpers/api-service'
 
@@ -68,7 +74,8 @@ export default {
   },
   components: {
     InfiniteLoading,
-    CardFileList
+    CardFileList,
+    SubscribeButton
   }
 }
 </script>
