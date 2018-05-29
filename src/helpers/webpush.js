@@ -19,9 +19,12 @@ async function registerPush() {
     url: 'push/register',
     method: 'POST',
     body: {
-      endpoint: subscription.endpoint
+      subscription: JSON.stringify(subscription)
     }
   })
+    .catch(() => {
+      subscription.unsubscribe()
+    })
 }
 
 async function unregisterPush() {
@@ -36,7 +39,7 @@ async function unregisterPush() {
         url: 'push/unregister',
         method: 'POST',
         body: {
-          endpoint: subscription.endpoint
+          subscription: JSON.stringify(subscription)
         }
       })
     })
