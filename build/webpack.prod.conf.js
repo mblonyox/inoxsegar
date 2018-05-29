@@ -98,16 +98,20 @@ const webpackConfig = merge(baseWebpackConfig, {
         from: path.resolve(__dirname, '../static'),
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
+      },
+      {
+        from: path.resolve(__dirname, '../src/sw.js'),
+        to: config.build.assetsRoot + '/sw.js'
       }
     ]),
     // service worker caching
     new SWPrecacheWebpackPlugin({
       cacheId: 'inoxsegar',
       filename: 'service-worker.js',
-      staticFileGlobs: ['dist/**/*.{js,html,css}'],
+      staticFileGlobs: ['dist/**/*.*'],
       minify: true,
       stripPrefix: 'dist/',
-      importScripts: [path.resolve(__dirname, '../src/sw.js')]
+      importScripts: ['/sw.js']
     })
   ]
 })
