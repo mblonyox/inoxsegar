@@ -52,7 +52,7 @@ const actions = {
           commit('setUser', result.body.user)
           commit('setToken', result.body.token)
           commit('setLoggedIn', true)
-          commit('setSubscription', result.body.user.subscriptions)
+          commit('setSubscription', result.body.user.topicSubscribed)
           if (redirectTo) router.push(redirectTo)
           else router.push('/')
         }
@@ -69,7 +69,7 @@ const actions = {
           commit('setUser', result.body.user)
           commit('setToken', result.body.token)
           commit('setLoggedIn', true)
-          commit('setSubscription', result.body.user.subscriptions)
+          commit('setSubscription', result.body.user.topicSubscribed)
           router.push('/activate-account')
         }
       })
