@@ -43,20 +43,7 @@
     </div>
     <div class="box">
       <div class="columns is-multiline">
-        <div class="column is-one-quarter" v-for="movie in movies" :key="movie._id">
-          <router-link :to="{name: 'PageMovie', params: {id: movie._id}}">
-            <div class="card">
-              <div class="card-image">
-                <figure class="image">
-                  <v-lazy-image 
-                    :src="movie.poster"
-                    :src-placeholder="noPoster"
-                  />
-                </figure>
-              </div>
-            </div>
-          </router-link>
-        </div>
+        <card-poster v-for="movie in movies" :item="movie" type="Movie" :key="movie._id"/>
       </div>
       <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading"/>
     </div>
@@ -66,9 +53,8 @@
 <script>
 import InfiniteLoading from 'vue-infinite-loading'
 import { NoNotify } from '../helpers/api-service'
-import noPoster from '../assets/no-poster.jpg'
-import VLazyImage from 'v-lazy-image'
 import SubscribeButton from './SubscribeButton'
+import CardPoster from './CardPoster'
 
 export default {
   data() {
@@ -81,9 +67,6 @@ export default {
   computed: {
     isAdmin() {
       return this.$store.state.auth.user.admin
-    },
-    noPoster() {
-      return noPoster
     }
   },
   methods: {
@@ -121,8 +104,8 @@ export default {
   },
   components: {
     InfiniteLoading,
-    VLazyImage,
-    SubscribeButton
+    SubscribeButton,
+    CardPoster
   }
 }
 </script>

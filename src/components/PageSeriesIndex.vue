@@ -43,17 +43,7 @@
     </div>
     <div class="box">
       <div class="columns is-multiline">
-        <div class="column is-one-quarter" v-for="set in series">
-          <router-link :to="{name: 'PageSeries', params: {id: set._id}}">
-            <div class="card">
-              <div class="card-image">
-                <figure class="image">
-                  <img :src="set.poster">
-                </figure>
-              </div>
-            </div>
-          </router-link>
-        </div>
+        <card-poster v-for="set in series" :item="set" type="Series" :key="set._key"/>
       </div>
       <infinite-loading @infinite="infiniteHandler" />
     </div>
@@ -64,6 +54,7 @@
 import InfiniteLoading from 'vue-infinite-loading'
 import { NoNotify } from '../helpers/api-service'
 import SubscribeButton from './SubscribeButton'
+import CardPoster from './CardPoster'
 
 export default {
   data() {
@@ -100,7 +91,8 @@ export default {
   },
   components: {
     InfiniteLoading,
-    SubscribeButton
+    SubscribeButton,
+    CardPoster
   }
 }
 </script>
