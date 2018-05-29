@@ -26,7 +26,7 @@ const mutations = {
     state.pending = !!isPending
   },
   setSubscription(state, subscriptions) {
-    state.subscriptions = subscriptions
+    state.subscriptions = subscriptions || []
   },
   pushSubscription(state, topic) {
     state.subscriptions.push(topic)
