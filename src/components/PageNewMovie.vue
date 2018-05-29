@@ -263,7 +263,7 @@
           cast: this.cast,
           poster: this.poster,
           rating: this.rating,
-          votes: this.votes
+          votes: this.votes.replace(/,/g, '')
         }
         WithToken.doRequest({
           url: 'movie',
