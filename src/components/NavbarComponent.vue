@@ -100,7 +100,7 @@
   }
 </script>
 
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css?family=Lobster');
 
 .inox-logo {
