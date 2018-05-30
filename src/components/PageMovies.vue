@@ -29,13 +29,16 @@
         </div>
         <div class="level-item">
           <div class="select">
-            <select>
+            <select v-model="sortInput" @change="goSearch">
               <option value="">Urutkan</option>
-              <option value="donwload">Unduhan</option>
-              <option value="released">Tgl Rilis</option>
-              <option value="added">Tgl Ditambahkan</option>
-              <option value="rating">Rating IMDB</option>
-              <option value="like">Suka</option>
+              <option value="-_id">Ditambahkan (Terbaru)</option>
+              <option value="_id">Ditambahkan (Terlama)</option>
+              <option value="-year">Tahun Rilis (Terbaru)</option>
+              <option value="year">Tahun Rilis (Terlama)</option>
+              <option value="-imdbRating">Rating IMDB (Terbanyak)</option>
+              <option value="imdbRating">Rating IMDB (Terkecil)</option>
+              <option value="-imdbVotes">Votes IMDB (Terbanyak)</option>
+              <option value="imdbVotes">Votes IMDB (Terkecil)</option>
             </select>
           </div>
         </div>
@@ -61,6 +64,7 @@ export default {
     return {
       movies: [],
       searchInput: '',
+      sortInput: '',
       page: 0
     }
   },
@@ -76,6 +80,7 @@ export default {
         url: 'movie',
         query: {
           search: this.$route.query.search || '',
+          sort: this.$route.query.sort || '',
           page: this.page
         }
       })
@@ -91,7 +96,7 @@ export default {
         })
     },
     goSearch() {
-      this.$router.push({name: 'PageMovies', query: {search: this.searchInput}})
+      this.$router.push({name: 'PageMovies', query: {search: this.searchInput, sort: this.sortInput}})
     }
   },
   beforeRouteUpdate(to, from, next) {
