@@ -13,6 +13,8 @@ import './helpers/webpush'
 import 'bulma/css/bulma.css'
 import 'font-awesome/css/font-awesome.css'
 import 'bulma-extensions/bulma-switch/dist/bulma-switch.min.css'
+import 'bulma-extensions/bulma-badge/dist/bulma-badge.min.css'
+import 'bulma-extensions/bulma-divider/dist/bulma-divider.min.css'
 
 Vue.config.productionTip = false
 

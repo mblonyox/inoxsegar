@@ -4,13 +4,18 @@
     <main>
       <router-view/>
     </main>
+    <chat-container/>
   </div>
 </template>
 
 <script>
 import NavbarComponent from './NavbarComponent'
+import ChatContainer from './chat/ChatContainer'
 
 export default {
-  components: {NavbarComponent}
+  components: {
+    NavbarComponent,
+    ChatContainer
+  }
 }
 </script>

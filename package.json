@@ -18,6 +18,8 @@
     "filesize": "^3.5.11",
     "font-awesome": "^4.7.0",
     "md5": "^2.2.1",
+    "moment": "^2.22.2",
+    "socket.io-client": "^2.1.1",
     "tus-js-client": "^1.4.5",
     "v-lazy-image": "^1.2.1",
     "vue": "^2.5.2",
