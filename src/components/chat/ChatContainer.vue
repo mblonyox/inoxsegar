@@ -15,13 +15,14 @@
       </div>
       <div class="field">
         <p class="control">
-          <textarea 
+          <textarea
             rows="3"
             class="textarea"
-            v-model="input"
+            v-model.trim="input"
             placeholder="Tulis pesan..."
             @keyup.enter.exact="sendMessage"
             :disabled="pending"
+            ref="chatInput"
           />
           <button class="button is-fullwidth" @click="sendMessage" :disabled="pending">Kirim</button>
         </p>
@@ -41,7 +42,7 @@ import { RefreshToken } from '../../helpers/api-service'
 
 export default {
   data: () => ({
-    hidden: false,
+    hidden: true,
     chats: [],
     input: '',
     pending: false,
@@ -71,6 +72,7 @@ export default {
               .on('new_message', (message) => {
                 this.chats.push(message)
                 if (this.hidden) this.badge++
+                else this.$nextTick(this.scrollBottom)
               })
               .on('system_message', (message) => {
                 this.chats.push({type: 'system', ...message})
@@ -79,7 +81,11 @@ export default {
           .on('unauthorized', () => {
             RefreshToken.doSingleRequest({})
               .then(({success}) => {
-                socket.emit('authenticate', {token: this.token})
+                if (success) {
+                  socket.emit('authenticate', {token: this.token})
+                } else {
+                  socket.close()
+                }
               })
           })
       })
@@ -87,12 +93,18 @@ export default {
       return socket
     },
     sendMessage() {
-      if (this.input) {
+      if (this.input.length) {
         this.pending = true
-        this.socket.emit('send_message', this.input, () => {
+        this.socket.emit('send_message', this.input, (message) => {
           this.pending = false
           this.input = ''
-          this.scrollBottom()
+          this.chats.push(message)
+          this.$nextTick(() => {
+            if (!this.hidden) {
+              this.scrollBottom()
+              this.$refs.chatInput.focus()
+            }
+          })
         })
       }
     },

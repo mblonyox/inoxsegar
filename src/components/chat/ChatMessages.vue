@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-for="group in grouped">
-      <div 
+      <div
         class="is-divider"
         :data-content="`${group.text} - ${formatTime(group.time)}`"
         v-if="group.type === 'system'"
@@ -32,7 +32,7 @@ export default {
         const before = this.messages[index - 1]
         if (message.type === 'system') {
           group.push(message)
-        } else if (before && before.sender._id === message.sender._id) {
+        } else if (before && before.sender && before.sender._id === message.sender._id) {
           group[group.length - 1].texts.push({
             value: message.text,
             time: message.createdAt,
