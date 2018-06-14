@@ -59,7 +59,7 @@ export default {
     infiniteHandler($state) {
       this.page++
       NoNotify.doRequest({
-        url: 'log_download',
+        url: 'stats/log_download',
         query: {
           page: this.page
         }

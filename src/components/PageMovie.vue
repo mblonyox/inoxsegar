@@ -123,14 +123,13 @@ export default {
       this.movie.files.splice(index, 1, newFile)
     },
     onModalSubmit(fileId) {
-      const data = {
-        movieId: this.id,
-        fileId
-      }
       WithToken.doRequest({
-        url: 'movie/add-file',
+        url: 'movie/:movieId/file',
         method: 'POST',
-        body: data
+        params: {
+          movieId: this.id
+        },
+        body: {fileId}
       })
         .then(state => state.result.body)
         .then(body => {

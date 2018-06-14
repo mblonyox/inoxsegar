@@ -29,8 +29,8 @@
               <td>Pengunggah</td>
               <td>:</td>
               <td>
-                <router-link 
-                  :to="{name: 'PageUser', params: {id: file.uploader._id }}" 
+                <router-link
+                  :to="{name: 'PageUser', params: {id: file.uploader._id }}"
                   v-if="file.uploader">
                   {{ file.uploader.username }}
                 </router-link>
@@ -45,7 +45,7 @@
               <td>Koleksi</td>
               <td>:</td>
               <td>
-                <router-link 
+                <router-link
                   :to="file.koleksi.tipe + '/' + file.koleksi.data._id"
                   v-if="file.koleksi && file.koleksi.data"
                   >
@@ -77,7 +77,7 @@
             </tr>
           </tbody>
         </table>
-        <button 
+        <button
           class="button"
           @click="toggleLike"
           :class="{'is-success': isLiked}"
@@ -88,9 +88,9 @@
             {{ isLiked ? 'Batal Suka' : 'Suka' }}
           </span>
         </button>
-        <button 
-          class="button" 
-          @click="toggleDislike" 
+        <button
+          class="button"
+          @click="toggleDislike"
           :class="{'is-danger': isDisliked}"
           v-if="isDisliked || !isLiked"
         >
@@ -99,7 +99,7 @@
             {{ isDisliked ? 'Batal Tidak Suka' : 'Tidak Suka' }}
           </span>
         </button>
-        <a :href="`/api/download/${file._id}?token=${getToken}`" class="button is-primary">
+        <a :href="`/api/file/${file._id}/download?token=${getToken}`" class="button is-primary">
           <span>
             <i class="fa fa-download"></i>
             Unduh

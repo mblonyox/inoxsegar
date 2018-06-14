@@ -91,7 +91,7 @@
         this.validate()
         if (this.isValid.password && this.isValid.confirmation) {
           BaseService.doRequest({
-            url: 'change_password',
+            url: 'auth/change_password',
             method: 'POST',
             body: { password: this.password, token: this.$route.query.token }
           }).then(({result}) => {

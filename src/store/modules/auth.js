@@ -43,7 +43,7 @@ const mutations = {
 const actions = {
   authenticate({commit}, {credentials, remember, redirectTo}) {
     BaseService.doRequest({
-      url: 'authenticate',
+      url: 'auth/authenticate',
       method: 'POST',
       body: {...credentials, remember}
     })
@@ -60,7 +60,7 @@ const actions = {
   },
   register({commit}, data) {
     BaseService.doRequest({
-      url: 'register',
+      url: 'auth/register',
       method: 'POST',
       body: data
     })
@@ -76,7 +76,7 @@ const actions = {
   },
   activate({commit, state}, kode) {
     WithToken.doRequest({
-      url: 'activate',
+      url: 'auth/activate',
       method: 'POST',
       body: {kode}
     })

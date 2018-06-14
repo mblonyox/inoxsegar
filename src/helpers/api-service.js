@@ -21,7 +21,7 @@ export const BaseService = new ApiService({adapter: fetch,
   .on('finish', () => { store.dispatch('pendingDone') })
 
 export const RefreshToken = BaseService.extend({
-  url: 'refresh_token',
+  url: 'auth/refresh_token',
   method: 'POST',
   hooks: {
     before({payload, meta, next}) {

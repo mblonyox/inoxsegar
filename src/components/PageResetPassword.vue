@@ -54,7 +54,7 @@
     methods: {
       onSubmit() {
         BaseService.doRequest({
-          url: 'reset_password',
+          url: 'auth/reset_password',
           method: 'POST',
           body: { email: this.email }
         }).then(({result}) => {
