@@ -10,6 +10,7 @@
       </button>
     </div>
     <template v-if="!hidden">
+      <chat-online-users :users="users" />
       <div class="message-body" ref="chatWindow">
         <chat-messages :messages="chats"/>
       </div>
@@ -27,10 +28,6 @@
           <button class="button is-fullwidth" @click="sendMessage" :disabled="pending">Kirim</button>
         </p>
       </div>
-      <div class="field">
-        <p class="control">
-        </p>
-      </div>
     </template>
   </div>
 </template>
@@ -38,11 +35,13 @@
 <script>
 import io from 'socket.io-client'
 import ChatMessages from './ChatMessages'
+import ChatOnlineUsers from './ChatOnlineUsers'
 import { RefreshToken } from '../../helpers/api-service'
 
 export default {
   data: () => ({
     hidden: true,
+    users: [],
     chats: [],
     input: '',
     pending: false,
@@ -62,6 +61,9 @@ export default {
       socket.on('connect', () => {
         socket
           .emit('authenticate', {token: this.token})
+          .on('online_users', (users) => {
+            this.users = users
+          })
           .on('authenticated', () => {
             socket.on('old_messages', (messages) => {
               this.chats = messages
@@ -121,7 +123,8 @@ export default {
     }
   },
   components: {
-    ChatMessages
+    ChatMessages,
+    ChatOnlineUsers
   },
   mounted() {
     this.socket = this.connect()
