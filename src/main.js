@@ -15,6 +15,7 @@ import 'font-awesome/css/font-awesome.css'
 import 'bulma-extensions/bulma-switch/dist/bulma-switch.min.css'
 import 'bulma-extensions/bulma-badge/dist/bulma-badge.min.css'
 import 'bulma-extensions/bulma-divider/dist/bulma-divider.min.css'
+import 'bulma-extensions/bulma-tooltip/dist/bulma-tooltip.min.css'
 
 Vue.config.productionTip = false
 

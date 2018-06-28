@@ -1,9 +1,13 @@
 <template>
   <div class="online-users level">
-    <span>{{ users.length }} online:</span>
-    <span class="image is-32x32" v-for="user in users">
-      <img :src="getAvatar(user.email)" class="avatar" alt="avatar">
-    </span>
+    <div class="level-left">
+      <span class="level-item">{{ users.length }} online:</span>
+    </div>
+    <div class="level-right">
+      <span class="image is-32x32 tooltip is-tooltip-bottom level-item" v-for="user in users" :data-tooltip="user.username" >
+        <img :src="getAvatar(user.email)" class="avatar" alt="avatar">
+      </span>
+    </div>
   </div>
 </template>
 
@@ -24,12 +28,9 @@
 </script>
 
 <style>
-span.image {
-  display: inline-block;
-}
 
-div.online-users {
+.chat div.online-users {
   padding: 5px;
-  overflow: hidden;
+  margin-bottom: 0.5rem;
 }
 </style>
