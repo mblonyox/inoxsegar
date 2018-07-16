@@ -11,6 +11,7 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+.vscode
 
 # API key
 src/assets/omdb-api-key.js
