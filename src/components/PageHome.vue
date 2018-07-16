@@ -1,10 +1,10 @@
 <template>
   <div id="home">
-    <section class="hero is-primary is-medium">
+    <section class="hero is-danger is-medium">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title">Selamat datang di server baru InoxSegar</h1>
-          <h2 class="subtitle">Ini adalah laman depan tampilan dan aplikasi InoxSegar.</h2>
+          <h1 class="title">Sampai Jumpa~</h1>
+          <h2 class="subtitle">Layanan InoxSegar akan segera dinon-aktifkan. Terima kasih atas dukungannya selama ini.</h2>
         </div>
       </div>
     </section>
